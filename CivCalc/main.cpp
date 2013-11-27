@@ -140,52 +140,60 @@ private:
 
 int main(int argc, const char * argv[]) {
     City amsterdamCity;
-    amsterdamCity.setPopulation(4);
+    amsterdamCity.setPopulation(2);
     amsterdamCity.setTiles({
         Goods(2, 1, 9), // city
         Goods(5, 0, 3), // fish
         Goods(4, 2, 1), // cow
-        Goods(5, 1, 1), // wheat
-        Goods(1, 3, 1)  // riverside mine
+        Goods(1, 3, 0)  // mine
     });
-    amsterdamCity.setAccumulatedGoods(Goods(0, 16, 0));
+    amsterdamCity.setAccumulatedGoods(Goods(0, 15, 0));
     UserEvents events;
-    events.whipTurn = 2;
-    events.whipCount = 2;
-    events.revolutionTurn = -2;
-    events.chopTurn = 0;
-    Building workBoat("WORK BOAT", 30, false);
-    workBoat.setAccumulatedHammers(6);
-    amsterdamCity.enqueueBuilding(Building("SETTLER  ", 100, true));
-    amsterdamCity.enqueueBuilding(workBoat);
-    amsterdamCity.enqueueBuilding(Building("WARRIOR  ", 15,  false));
-    amsterdamCity.enqueueBuilding(Building("WORKER   ", 60,  true));
-    amsterdamCity.enqueueBuilding(Building("WARRIOR  ", 15,  false));
+    events.whipTurn = 15;
+    events.whipCount = 1;
+    events.revolutionTurn = -20;
+    events.chopTurn = 14;
+    amsterdamCity.enqueueBuilding(Building("WORKER   ", true,  60));
+    amsterdamCity.enqueueBuilding(Building("WARRIOR  ", false, 15));
+    amsterdamCity.enqueueBuilding(Building("SETTLER  ", true,  100));
+    amsterdamCity.enqueueBuilding(Building("WORKER   ", true,  60));
     amsterdamCity.processBuildingQueue(events);
-    
-//    City amsterdamCity;
-//    amsterdamCity.setPopulation(4);
-//    amsterdamCity.setTiles({
-//        Goods(2, 1, 9), // city
-//        Goods(5, 0, 3), // fish
-//        Goods(4, 2, 1), // cow
+
+//    City utrechtCity;
+//    utrechtCity.setPopulation(1);
+//    utrechtCity.setTiles({
+//        Goods(2, 1, 1), // city
 //        Goods(5, 1, 1), // wheat
-//        Goods(1, 3, 1)  // riverside mine
+//        Goods(1, 3, 1), // riverside mine
+//        Goods(1, 3, 0)  // mine
 //    });
-//    amsterdamCity.setAccumulatedGoods(Goods(0, 16, 0));
+//    utrechtCity.setAccumulatedGoods(Goods(6, 0, 0));
 //    UserEvents events;
-//    events.whipTurn = 2;
-//    events.whipCount = 2;
-//    events.revolutionTurn = -2;
-//    events.chopTurn = 0;
-//    Building workBoat("WORK BOAT", 30, false);
-//    workBoat.setAccumulatedHammers(6);
-//    amsterdamCity.enqueueBuilding(Building("SETTLER  ", 100, true));
-//    amsterdamCity.enqueueBuilding(workBoat);
-//    amsterdamCity.enqueueBuilding(Building("WARRIOR  ", 15,  false));
-//    amsterdamCity.enqueueBuilding(Building("WORKER   ", 60,  true));
-//    amsterdamCity.enqueueBuilding(Building("WARRIOR  ", 15,  false));
-//    amsterdamCity.processBuildingQueue(events);
-    
+//    events.whipTurn = 8;
+//    events.whipCount = 1;
+//    events.revolutionTurn = -20;
+//    events.chopTurn = -9;
+//    utrechtCity.enqueueBuilding(Building("WORK BOAT", false, 10, 2));
+//    utrechtCity.enqueueBuilding(Building("WORKER   ", true,  60));
+//    utrechtCity.enqueueBuilding(Building("WORK BOAT", false, 30, 10));
+//    utrechtCity.processBuildingQueue(events);
+
+//    City nonameCity;
+//    nonameCity.setPopulation(2);
+//    nonameCity.setTiles({
+//        Goods(2, 1, 1), // city
+//        Goods(4, 0, 3), // clam
+//        Goods(5, 0, 3), // fish
+//        Goods(1, 5, 0)  // copper
+//    });
+//    nonameCity.setAccumulatedGoods(Goods(11, 14, 26));
+//    UserEvents events;
+//    events.whipTurn = 3;
+//    events.whipCount = 1;
+//    events.revolutionTurn = -20;
+//    events.chopTurn = -10;
+//    nonameCity.enqueueBuilding(Building("GALLEY   ", false,  50));
+//    nonameCity.processBuildingQueue(events);
+
     return 0;
 }

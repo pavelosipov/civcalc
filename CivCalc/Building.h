@@ -13,13 +13,17 @@
 
 class Building {
 public:
-    Building(const std::string &name, uint8_t requiredHammers, bool eatsFood)
+    Building(const std::string &name, bool eatsFood, uint8_t requiredHammers)
+        : Building(name, eatsFood, requiredHammers, 0)
+    {}
+
+    Building(const std::string &name, bool eatsFood, uint8_t requiredHammers, uint8_t accumulatedHammers)
         : name_(name)
         , requiredHammers_(requiredHammers)
-        , accumulatedHammers_(0)
+        , accumulatedHammers_(accumulatedHammers)
         , eatsFood_(eatsFood)
     {}
-    
+
     bool isComleted() const {
         return requiredHammers_ == accumulatedHammers_;
     }
