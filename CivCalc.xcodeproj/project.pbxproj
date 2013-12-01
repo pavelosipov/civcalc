@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		21E234FB183F51A800AE5F68 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21E234FA183F51A800AE5F68 /* main.cpp */; };
+		47296DD2184A93300095301A /* Building.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DC8184A93300095301A /* Building.cpp */; };
+		47296DD3184A93300095301A /* City.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DCA184A93300095301A /* City.cpp */; };
+		47296DD5184A93300095301A /* Goods.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DCE184A93300095301A /* Goods.cpp */; };
+		47296DD6184A93300095301A /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DD0184A93300095301A /* Tile.cpp */; };
+		47296DE9184B56FC0095301A /* Action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DE3184B56FC0095301A /* Action.cpp */; };
+		47296DEA184B56FC0095301A /* ActionQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DE5184B56FC0095301A /* ActionQueue.cpp */; };
+		47296DEB184B56FC0095301A /* AnyAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DE7184B56FC0095301A /* AnyAction.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,11 +30,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		21CDF4C418447B5300AC8390 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
 		21E234F7183F51A800AE5F68 /* CivCalc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CivCalc; sourceTree = BUILT_PRODUCTS_DIR; };
 		21E234FA183F51A800AE5F68 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		4745A12A1842061E002DF716 /* Goods.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Goods.h; sourceTree = "<group>"; };
-		4745A12B184207FF002DF716 /* Building.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
+		47296DC8184A93300095301A /* Building.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Building.cpp; sourceTree = "<group>"; };
+		47296DC9184A93300095301A /* Building.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
+		47296DCA184A93300095301A /* City.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = City.cpp; sourceTree = "<group>"; };
+		47296DCB184A93300095301A /* City.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
+		47296DCE184A93300095301A /* Goods.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Goods.cpp; sourceTree = "<group>"; };
+		47296DCF184A93300095301A /* Goods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Goods.h; sourceTree = "<group>"; };
+		47296DD0184A93300095301A /* Tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tile.cpp; sourceTree = "<group>"; };
+		47296DD1184A93300095301A /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
+		47296DE3184B56FC0095301A /* Action.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Action.cpp; sourceTree = "<group>"; };
+		47296DE4184B56FC0095301A /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Action.h; sourceTree = "<group>"; };
+		47296DE5184B56FC0095301A /* ActionQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionQueue.cpp; sourceTree = "<group>"; };
+		47296DE6184B56FC0095301A /* ActionQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionQueue.h; sourceTree = "<group>"; };
+		47296DE7184B56FC0095301A /* AnyAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyAction.cpp; sourceTree = "<group>"; };
+		47296DE8184B56FC0095301A /* AnyAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyAction.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +78,39 @@
 		21E234F9183F51A800AE5F68 /* CivCalc */ = {
 			isa = PBXGroup;
 			children = (
+				47296DE2184B56FC0095301A /* Actions */,
+				47296DC7184A93300095301A /* Entities */,
 				21E234FA183F51A800AE5F68 /* main.cpp */,
-				4745A12A1842061E002DF716 /* Goods.h */,
-				4745A12B184207FF002DF716 /* Building.h */,
-				21CDF4C418447B5300AC8390 /* Entity.h */,
 			);
 			path = CivCalc;
+			sourceTree = "<group>";
+		};
+		47296DC7184A93300095301A /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				47296DC8184A93300095301A /* Building.cpp */,
+				47296DC9184A93300095301A /* Building.h */,
+				47296DCA184A93300095301A /* City.cpp */,
+				47296DCB184A93300095301A /* City.h */,
+				47296DCE184A93300095301A /* Goods.cpp */,
+				47296DCF184A93300095301A /* Goods.h */,
+				47296DD0184A93300095301A /* Tile.cpp */,
+				47296DD1184A93300095301A /* Tile.h */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		47296DE2184B56FC0095301A /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				47296DE3184B56FC0095301A /* Action.cpp */,
+				47296DE4184B56FC0095301A /* Action.h */,
+				47296DE5184B56FC0095301A /* ActionQueue.cpp */,
+				47296DE6184B56FC0095301A /* ActionQueue.h */,
+				47296DE7184B56FC0095301A /* AnyAction.cpp */,
+				47296DE8184B56FC0095301A /* AnyAction.h */,
+			);
+			path = Actions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +164,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47296DE9184B56FC0095301A /* Action.cpp in Sources */,
+				47296DEB184B56FC0095301A /* AnyAction.cpp in Sources */,
+				47296DD3184A93300095301A /* City.cpp in Sources */,
+				47296DD5184A93300095301A /* Goods.cpp in Sources */,
+				47296DEA184B56FC0095301A /* ActionQueue.cpp in Sources */,
+				47296DD6184A93300095301A /* Tile.cpp in Sources */,
 				21E234FB183F51A800AE5F68 /* main.cpp in Sources */,
+				47296DD2184A93300095301A /* Building.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
