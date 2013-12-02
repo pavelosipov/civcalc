@@ -17,15 +17,17 @@ class Building {
 public:
     Building(
         const std::string &name,
-        bool eatsFood, uint8_t
-        requiredHammers,
-        uint8_t accumulatedHammers);
+        bool eatsFood,
+        int8_t requiredHammers,
+        int8_t accumulatedHammers);
     Building(Building &&other);
     Building(const Building &other) = delete;
     Building &operator = (const Building &other) = delete;
     
-    uint8_t accumulatedHammers() const;
-    void setAccumulatedHammers(uint8_t hammers);
+    int8_t requiredHammers() const;
+    
+    int8_t accumulatedHammers() const;
+    void setAccumulatedHammers(int8_t hammers);
 
     bool isComleted() const;
     void applyGoods(Goods &goods);
@@ -36,16 +38,16 @@ public:
     static std::shared_ptr<Building> create(
         const std::string &name,
         bool eatsFood,
-        uint8_t requiredHammers,
-        uint8_t accumulatedHammers = 0);
-    static std::shared_ptr<Building> warrior(uint8_t accumulatedHammers = 0);
-    static std::shared_ptr<Building> workBoat(uint8_t accumulatedHammers = 0);
-    static std::shared_ptr<Building> settler(uint8_t accumulatedHammers = 0);
-    static std::shared_ptr<Building> worker(uint8_t accumulatedHammers = 0);
+        int8_t requiredHammers,
+        int8_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> warrior(int8_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> workBoat(int8_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> settler(int8_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> worker(int8_t accumulatedHammers = 0);
 
 private:
     const std::string name_;
-    const uint8_t requiredHammers_;
-    uint8_t accumulatedHammers_;
+    const int8_t requiredHammers_;
+    int8_t accumulatedHammers_;
     const bool eatsFood_;
 };

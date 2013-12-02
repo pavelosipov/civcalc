@@ -12,6 +12,10 @@ AnyAction::AnyAction(const ProcessFunctor &functor)
     : processFunctor_(functor)
 {}
 
+std::shared_ptr<AnyAction> AnyAction::create(const ProcessFunctor &functor) {
+    return std::make_shared<AnyAction>(functor);
+}
+
 void AnyAction::processApply(City &city, Goods &turnGoods) {
     processFunctor_(city, turnGoods);
 }

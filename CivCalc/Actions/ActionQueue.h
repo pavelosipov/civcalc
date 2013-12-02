@@ -22,7 +22,7 @@ class ActionQueue {
         uint8_t turn;
         std::shared_ptr<Action> action;
         friend bool operator < (const Item &lhs, const Item &rhs) {
-            return lhs.turn < rhs.turn;
+            return lhs.turn > rhs.turn;
         }
     };
     

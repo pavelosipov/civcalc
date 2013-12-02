@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21603F82184C679B00F2A398 /* WhipAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21603F80184C679B00F2A398 /* WhipAction.cpp */; };
 		21E234FB183F51A800AE5F68 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21E234FA183F51A800AE5F68 /* main.cpp */; };
 		47296DD2184A93300095301A /* Building.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DC8184A93300095301A /* Building.cpp */; };
 		47296DD3184A93300095301A /* City.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DCA184A93300095301A /* City.cpp */; };
@@ -30,6 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		21603F80184C679B00F2A398 /* WhipAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WhipAction.cpp; sourceTree = "<group>"; };
+		21603F81184C679B00F2A398 /* WhipAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhipAction.h; sourceTree = "<group>"; };
 		21E234F7183F51A800AE5F68 /* CivCalc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CivCalc; sourceTree = BUILT_PRODUCTS_DIR; };
 		21E234FA183F51A800AE5F68 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		47296DC8184A93300095301A /* Building.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Building.cpp; sourceTree = "<group>"; };
@@ -109,6 +112,8 @@
 				47296DE6184B56FC0095301A /* ActionQueue.h */,
 				47296DE7184B56FC0095301A /* AnyAction.cpp */,
 				47296DE8184B56FC0095301A /* AnyAction.h */,
+				21603F80184C679B00F2A398 /* WhipAction.cpp */,
+				21603F81184C679B00F2A398 /* WhipAction.h */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -165,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47296DE9184B56FC0095301A /* Action.cpp in Sources */,
+				21603F82184C679B00F2A398 /* WhipAction.cpp in Sources */,
 				47296DEB184B56FC0095301A /* AnyAction.cpp in Sources */,
 				47296DD3184A93300095301A /* City.cpp in Sources */,
 				47296DD5184A93300095301A /* Goods.cpp in Sources */,

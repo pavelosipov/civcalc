@@ -11,9 +11,13 @@
 #include "Building.h"
 #include "Tile.h"
 
+#include <assert.h>
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
+#include <string.h>
+
+static const uint8_t WhipHammersCount = 30;
 
 City::City()
     : population_(1)
@@ -87,19 +91,30 @@ void City::removeTile(std::shared_ptr<Tile> tile) {
 }
 
 bool City::canWhip() const {
+    if (std::shared_ptr<Building> topBuilding = buildingQueue_.front()) {
+        const int8_t whippingHammers = topBuilding->requiredHammers() - topBuilding->accumulatedHammers();
+        return 0 < whippingHammers && whippingHammers <= (population_ - 1) * WhipHammersCount;
+    }
     return false;
 }
 
 void City::whip() {
-    
+    assert(canWhip());
+    std::shared_ptr<Building> topBuilding = buildingQueue_.front();
+    const int8_t whippingHammers = topBuilding->requiredHammers() - topBuilding->accumulatedHammers();
+    const uint8_t populationCost = whippingHammers / WhipHammersCount + (whippingHammers % WhipHammersCount ? 1 : 0);
+    population_ -= populationCost;
+    accumulatedGoods_.hammers += populationCost * WhipHammersCount;
+    turnLogger().addWhipEvent(populationCost);
 }
-             
+
 void City::processBuildingQueue(uint8_t turn, ActionQueue &actionQueue) {
     while (!buildingQueue_.empty()) {
         turnLogger_ = std::move(std::unique_ptr<CityTurnLogger>(new CityTurnLogger()));
-        Goods turnGoods = workTiles();
-        turnLogger_->setGoods(turnGoods);
+        Goods turnGoods;
         actionQueue.applyActions(turn, *this, turnGoods);
+        turnGoods += workTiles();
+        turnLogger_->setGoods(turnGoods);
         turnLogger_->logTurn(turn, *this);
         turnGoods.hammers += accumulatedGoods_.hammers;
         accumulatedGoods_.hammers = 0;
@@ -147,6 +162,13 @@ void CityTurnLogger::addEvent(const std::string &eventName) {
     events_.push_back(eventName);
 }
 
+
+void CityTurnLogger::addWhipEvent(uint8_t whipCount) {
+    char buffer[16];
+    sprintf(buffer, "WHIP (%d)", whipCount);
+    addEvent(buffer);
+}
+
 void CityTurnLogger::setGoods(const Goods &goods) {
     goods_ = goods;
 }
@@ -156,8 +178,8 @@ void CityTurnLogger::logTurn(uint8_t turn, const City &city) {
     std::cout << "T" << std::setw(2) << static_cast<int>(turn) << ":    "
               << city << "    "
               << goods_ << "    ";
-    if (std::shared_ptr<Building> topBuilding = city.topBuilding()) {
-        std::cout << *topBuilding << (topBuilding->isComleted() ? "*   " : "    ");
+    for (int i = 0; i < city.buildingQueue_.size(); ++i) {
+        std::cout << *city.buildingQueue_[i] << (city.buildingQueue_[i]->isComleted() ? "*   " : "    ");
     }
     for (int i = 0; i < events_.size(); ++i) {
         std::cout << events_[i];

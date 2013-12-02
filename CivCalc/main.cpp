@@ -6,10 +6,13 @@
 //  Copyright (c) 2013 Pavel Osipov. All rights reserved.
 //
 
-#include "ActionQueue.h"
 #include "Building.h"
 #include "City.h"
 #include "Tile.h"
+
+#include "ActionQueue.h"
+#include "AnyAction.h"
+#include "WhipAction.h"
 
 int main(int argc, const char * argv[]) {
     City utrechtCity;
@@ -21,9 +24,11 @@ int main(int argc, const char * argv[]) {
     });
     //utrechtCity.setAccumulatedGoods(Goods(6, 0, 0));
     utrechtCity.pushBuilding(Building::workBoat());
-    utrechtCity.pushBuilding(Building::worker());
-    utrechtCity.pushBuilding(Building::workBoat());
     ActionQueue actionQueue;
+    actionQueue.pushAction(5, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.setTopBuilding(Building::worker());
+    }));
+    actionQueue.pushAction(9, WhipAction::create());
     utrechtCity.processBuildingQueue(0, actionQueue);
 
 //    City amsterdamCity;

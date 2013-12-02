@@ -23,6 +23,7 @@ class Tile;
 class CityTurnLogger {
 public:
     void addEvent(const std::string &eventName);
+    void addWhipEvent(uint8_t whipCount);
     void setGoods(const Goods &goods);
     void logTurn(uint8_t turn, const City &city);
     
@@ -68,6 +69,7 @@ private:
     void grow(Goods &goods);
     
 public:
+    friend CityTurnLogger;
     friend std::ostream& operator << (std::ostream &stream, const City &city);
     
 private:
