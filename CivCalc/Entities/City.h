@@ -52,8 +52,9 @@ public:
     void setTopBuilding(std::shared_ptr<Building> building);
     void pushBuilding(std::shared_ptr<Building> building);
     
+    std::shared_ptr<Tile> tileAt(size_t index) const;
     void setTiles(const std::vector<std::shared_ptr<Tile>> &tiles);
-    void insertTile(uint8_t position, std::shared_ptr<Tile> tile);
+    void swapTiles(size_t lpos, size_t rpos);
     void removeTile(std::shared_ptr<Tile> tile);
     
     bool canWhip() const;
@@ -77,7 +78,8 @@ private:
     uint8_t happiness_;
     uint8_t unhappiness_;
     Goods accumulatedGoods_;
-    std::vector<std::shared_ptr<Tile>> tiles_;
+    typedef std::vector<std::shared_ptr<Tile>> TileSet;
+    TileSet tiles_;
     typedef std::deque<std::shared_ptr<Building>> BuildingQueue;
     BuildingQueue buildingQueue_;
     std::queue<uint8_t> whipTurns_;

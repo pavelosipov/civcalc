@@ -78,6 +78,10 @@ std::shared_ptr<Building> Building::workBoat(int8_t accumulatedHammers) {
     return Building::create("WORK BOAT", false, 30, accumulatedHammers);
 }
 
+std::shared_ptr<Building> Building::axeman(int8_t accumulatedHammers) {
+    return Building::create("AXEMAN   ", false, 35, accumulatedHammers);
+}
+
 std::shared_ptr<Building> Building::settler(int8_t accumulatedHammers) {
     return Building::create("SETTLER  ", true,  100, accumulatedHammers);
 }

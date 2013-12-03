@@ -20,6 +20,10 @@ const Goods &Tile::goods() const {
     return baseGoods_;
 }
 
+void Tile::setGoods(const Goods &goods) {
+    baseGoods_ = goods;
+}
+
 std::ostream& operator << (std::ostream &stream, const Tile &tile) {
     stream << tile.baseGoods_;
     return stream;

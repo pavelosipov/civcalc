@@ -20,13 +20,18 @@ int main(int argc, const char * argv[]) {
         Tile::create(2, 1, 1), // city
         Tile::create(5, 1, 1), // wheat
         Tile::create(1, 3, 1), // riverside mine
-        Tile::create(1, 3, 0)  // mine
+        Tile::create(3, 0, 0)  // cows
     });
     //utrechtCity.setAccumulatedGoods(Goods(6, 0, 0));
     utrechtCity.pushBuilding(Building::workBoat());
+    utrechtCity.pushBuilding(Building::axeman());
     ActionQueue actionQueue;
     actionQueue.pushAction(5, AnyAction::create([](City &city, Goods &turnGoods) {
         city.setTopBuilding(Building::worker());
+    }));
+    actionQueue.pushAction(14, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.tileAt(3)->setGoods(Goods(4, 2, 0));
+        city.swapTiles(2, 3);
     }));
     actionQueue.pushAction(9, WhipAction::create());
     utrechtCity.processBuildingQueue(0, actionQueue);

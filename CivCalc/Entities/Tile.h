@@ -22,9 +22,10 @@ public:
     static std::shared_ptr<Tile> create(uint8_t food, uint8_t hammers, uint8_t commerce);
 
     const Goods &goods() const;
+    void setGoods(const Goods &goods);
     
     friend std::ostream& operator << (std::ostream &stream, const Tile &tile);
 
 private:
-    const Goods baseGoods_;
+    Goods baseGoods_;
 };

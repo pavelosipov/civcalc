@@ -44,6 +44,7 @@ public:
     static std::shared_ptr<Building> workBoat(int8_t accumulatedHammers = 0);
     static std::shared_ptr<Building> settler(int8_t accumulatedHammers = 0);
     static std::shared_ptr<Building> worker(int8_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> axeman(int8_t accumulatedHammers = 0);
 
 private:
     const std::string name_;

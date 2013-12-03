@@ -78,12 +78,18 @@ void City::pushBuilding(std::shared_ptr<Building> building) {
     buildingQueue_.push_back(building);
 }
 
+std::shared_ptr<Tile> City::tileAt(size_t index) const {
+    assert(index < tiles_.size());
+    return tiles_[index];
+}
+
 void City::setTiles(const std::vector<std::shared_ptr<Tile>> &tiles) {
     tiles_.assign(tiles.begin(), tiles.end());
 }
 
-void City::insertTile(uint8_t position, std::shared_ptr<Tile> tile) {
-    
+void City::swapTiles(size_t lpos, size_t rpos) {
+    assert(lpos < tiles_.size() && rpos < tiles_.size());
+    std::swap(tiles_[lpos], tiles_[rpos]);
 }
 
 void City::removeTile(std::shared_ptr<Tile> tile) {
@@ -179,7 +185,9 @@ void CityTurnLogger::logTurn(uint8_t turn, const City &city) {
               << city << "    "
               << goods_ << "    ";
     for (int i = 0; i < city.buildingQueue_.size(); ++i) {
-        std::cout << *city.buildingQueue_[i] << (city.buildingQueue_[i]->isComleted() ? "*   " : "    ");
+        if (i == 0 || city.buildingQueue_[i]->accumulatedHammers() > 0) {
+            std::cout << *city.buildingQueue_[i] << (city.buildingQueue_[i]->isComleted() ? "*   " : "    ");
+        }
     }
     for (int i = 0; i < events_.size(); ++i) {
         std::cout << events_[i];
