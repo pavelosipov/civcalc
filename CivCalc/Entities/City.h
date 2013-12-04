@@ -65,6 +65,7 @@ public:
     CityTurnLogger &turnLogger() const;
     
 private:
+    uint8_t workingTilesCount() const;
     Goods workTiles() const;
     void produceBuilding(Goods &goods);
     void grow(Goods &goods);

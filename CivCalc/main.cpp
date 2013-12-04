@@ -39,7 +39,7 @@ int main(int argc, const char * argv[]) {
         city.swapTiles(2, 3);
     }));
     actionQueue.pushAction(8, WhipAction::create());
-    actionQueue.pushAction(21, AnyAction::create([](City &city, Goods &turnGoods) {
+    actionQueue.pushAction(17, AnyAction::create([](City &city, Goods &turnGoods) {
         city.swapTiles(3, 5);
     }));
     actionQueue.pushAction(30, WhipAction::create());

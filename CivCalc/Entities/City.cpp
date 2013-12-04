@@ -24,6 +24,7 @@ City::City()
     : population_(1)
     , happiness_(4)
     , tiles_({Tile::create(2, 1, 1)})
+    , turnLogger_(new CityTurnLogger())
 {}
 
 uint8_t City::population() const {
@@ -31,7 +32,16 @@ uint8_t City::population() const {
 }
 
 void City::setPopulation(uint8_t population) {
+    const uint8_t oldWorkingTilesCount = workingTilesCount();
     population_ = population;
+    const uint8_t newWorkingTilesCount = workingTilesCount();
+    std::ostringstream eventStream;
+    if (newWorkingTilesCount > oldWorkingTilesCount) {
+        eventStream << std::setfill('0') << "+(" << *tiles_[newWorkingTilesCount - 1] << ")";
+    } else if (newWorkingTilesCount < oldWorkingTilesCount) {
+        eventStream << std::setfill('0') << "-(" << *tiles_[oldWorkingTilesCount - 1] << ")";
+    }
+    turnLogger().addEvent(eventStream.str());
 }
 
 uint8_t City::happiness() const {
@@ -85,10 +95,15 @@ void City::setTiles(const std::vector<std::shared_ptr<Tile>> &tiles) {
 
 void City::swapTiles(size_t lpos, size_t rpos) {
     assert(lpos < tiles_.size() && rpos < tiles_.size());
+    const uint8_t tilesCount = workingTilesCount();
     std::ostringstream eventStream;
-    eventStream << std::setfill('0') << "SWAP: " << *tiles_[lpos] << " <-> " << *tiles_[rpos];
-    std::swap(tiles_[lpos], tiles_[rpos]);
+    if (lpos < tilesCount && rpos >= tilesCount) {
+        eventStream << std::setfill('0') << "(" << *tiles_[rpos] << ") <-> (" << *tiles_[lpos] << ")";
+    } else if (rpos < tilesCount && lpos >= tilesCount) {
+        eventStream << std::setfill('0') << "(" << *tiles_[lpos] << ") <-> (" << *tiles_[rpos] << ")";
+    }
     turnLogger().addEvent(eventStream.str());
+    std::swap(tiles_[lpos], tiles_[rpos]);
 }
 
 void City::removeTile(std::shared_ptr<Tile> tile) {
@@ -115,7 +130,6 @@ void City::whip() {
 
 void City::processBuildingQueue(uint8_t turn, ActionQueue &actionQueue) {
     while (!buildingQueue_.empty()) {
-        turnLogger_ = std::move(std::unique_ptr<CityTurnLogger>(new CityTurnLogger()));
         Goods turnGoods;
         actionQueue.applyActions(turn, *this, turnGoods);
         turnGoods += workTiles();
@@ -130,10 +144,14 @@ void City::processBuildingQueue(uint8_t turn, ActionQueue &actionQueue) {
     }
 }
 
+uint8_t City::workingTilesCount() const {
+    return std::max(0, population_ - std::max(0, unhappiness() - happiness_) + 1);
+}
+
 Goods City::workTiles() const {
-    const uint8_t workingTilesCount = std::max(0, population_ - std::max(0, unhappiness() - happiness_) + 1);
+    const uint8_t tilesCount = workingTilesCount();
     Goods turnGoods;
-    for (int i = 0; i < workingTilesCount; ++i) {
+    for (int i = 0; i < tilesCount; ++i) {
         turnGoods += tiles_[i]->goods();
     }
     turnGoods.food -= 2 * population_;
@@ -155,7 +173,7 @@ void City::grow(Goods &goods) {
     const int16_t nextPopulationFood = 20 + 2 * population_;
     if (accumulatedGoods_.food >= nextPopulationFood) {
         accumulatedGoods_.food -= nextPopulationFood;
-        ++population_;
+        setPopulation(population_ + 1);
     }
 }
 
@@ -189,8 +207,9 @@ void CityTurnLogger::logTurn(uint8_t turn, const City &city) {
         }
     }
     for (int i = 0; i < events_.size(); ++i) {
-        std::cout << events_[i];
+        std::cout << events_[i] << "    ";
     }
+    events_.clear();
     std::cout << std::endl;
 }
     
