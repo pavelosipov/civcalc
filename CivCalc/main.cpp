@@ -20,20 +20,29 @@ int main(int argc, const char * argv[]) {
         Tile::create(2, 1, 1), // city
         Tile::create(5, 1, 1), // wheat
         Tile::create(1, 3, 1), // riverside mine
-        Tile::create(3, 0, 0)  // cows
+        Tile::create(3, 0, 0), // cows
+        Tile::create(2, 0, 3), // riverside graasland cottage
+        Tile::create(2, 0, 3)  // riverside graasland cottage
     });
-    //utrechtCity.setAccumulatedGoods(Goods(6, 0, 0));
-    utrechtCity.pushBuilding(Building::workBoat());
+    utrechtCity.setAccumulatedGoods(Goods(6, 0, 0));
+    utrechtCity.pushBuilding(Building::workBoat(2));
+    utrechtCity.pushBuilding(Building::axeman());
+    utrechtCity.pushBuilding(Building::chariot());
+    utrechtCity.pushBuilding(Building::settler());
     utrechtCity.pushBuilding(Building::axeman());
     ActionQueue actionQueue;
-    actionQueue.pushAction(5, AnyAction::create([](City &city, Goods &turnGoods) {
+    actionQueue.pushAction(4, AnyAction::create([](City &city, Goods &turnGoods) {
         city.setTopBuilding(Building::worker());
     }));
-    actionQueue.pushAction(14, AnyAction::create([](City &city, Goods &turnGoods) {
+    actionQueue.pushAction(13, AnyAction::create([](City &city, Goods &turnGoods) {
         city.tileAt(3)->setGoods(Goods(4, 2, 0));
         city.swapTiles(2, 3);
     }));
-    actionQueue.pushAction(9, WhipAction::create());
+    actionQueue.pushAction(8, WhipAction::create());
+    actionQueue.pushAction(21, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.swapTiles(3, 5);
+    }));
+    actionQueue.pushAction(30, WhipAction::create());
     utrechtCity.processBuildingQueue(0, actionQueue);
 
 //    City amsterdamCity;

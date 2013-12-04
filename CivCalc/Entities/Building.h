@@ -18,16 +18,16 @@ public:
     Building(
         const std::string &name,
         bool eatsFood,
-        int8_t requiredHammers,
-        int8_t accumulatedHammers);
+        int16_t requiredHammers,
+        int16_t accumulatedHammers);
     Building(Building &&other);
     Building(const Building &other) = delete;
     Building &operator = (const Building &other) = delete;
     
-    int8_t requiredHammers() const;
+    int16_t requiredHammers() const;
     
-    int8_t accumulatedHammers() const;
-    void setAccumulatedHammers(int8_t hammers);
+    int16_t accumulatedHammers() const;
+    void setAccumulatedHammers(int16_t hammers);
 
     bool isComleted() const;
     void applyGoods(Goods &goods);
@@ -38,17 +38,18 @@ public:
     static std::shared_ptr<Building> create(
         const std::string &name,
         bool eatsFood,
-        int8_t requiredHammers,
-        int8_t accumulatedHammers = 0);
-    static std::shared_ptr<Building> warrior(int8_t accumulatedHammers = 0);
-    static std::shared_ptr<Building> workBoat(int8_t accumulatedHammers = 0);
-    static std::shared_ptr<Building> settler(int8_t accumulatedHammers = 0);
-    static std::shared_ptr<Building> worker(int8_t accumulatedHammers = 0);
-    static std::shared_ptr<Building> axeman(int8_t accumulatedHammers = 0);
+        int16_t requiredHammers,
+        int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> warrior(int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> workBoat(int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> settler(int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> worker(int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> axeman(int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> chariot(int16_t accumulatedHammers = 0);
 
 private:
     const std::string name_;
-    const int8_t requiredHammers_;
-    int8_t accumulatedHammers_;
+    const int16_t requiredHammers_;
+    int16_t accumulatedHammers_;
     const bool eatsFood_;
 };

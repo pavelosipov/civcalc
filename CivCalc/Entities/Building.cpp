@@ -11,7 +11,7 @@
 #include <iomanip>
 #include <string>
 
-Building::Building(const std::string &name, bool eatsFood, int8_t requiredHammers, int8_t accumulatedHammers)
+Building::Building(const std::string &name, bool eatsFood, int16_t requiredHammers, int16_t accumulatedHammers)
     : name_(name)
     , requiredHammers_(requiredHammers)
     , accumulatedHammers_(accumulatedHammers)
@@ -29,20 +29,20 @@ bool Building::isComleted() const {
     return requiredHammers_ == accumulatedHammers_;
 }
 
-int8_t Building::requiredHammers() const {
+int16_t Building::requiredHammers() const {
     return requiredHammers_;
 }
 
-int8_t Building::accumulatedHammers() const {
+int16_t Building::accumulatedHammers() const {
     return accumulatedHammers_;
 }
 
-void Building::setAccumulatedHammers(int8_t hammers) {
+void Building::setAccumulatedHammers(int16_t hammers) {
     accumulatedHammers_ = hammers;
 }
 
 void Building::applyGoods(Goods &goods) {
-    uint8_t consumedHammers = goods.hammers;
+    int16_t consumedHammers = goods.hammers;
     goods.hammers = 0;
     if (eatsFood_) {
         consumedHammers += goods.food;
@@ -65,27 +65,31 @@ std::ostream& operator << (std::ostream &stream, const Building &building) {
 std::shared_ptr<Building> Building::create(
     const std::string &name,
     bool eatsFood,
-    int8_t requiredHammers,
-    int8_t accumulatedHammers) {
+    int16_t requiredHammers,
+    int16_t accumulatedHammers) {
     return std::make_shared<Building>(name, eatsFood, requiredHammers, accumulatedHammers);
 }
 
-std::shared_ptr<Building> Building::warrior(int8_t accumulatedHammers) {
+std::shared_ptr<Building> Building::warrior(int16_t accumulatedHammers) {
     return Building::create("WARRIOR  ", false, 15, accumulatedHammers);
 }
 
-std::shared_ptr<Building> Building::workBoat(int8_t accumulatedHammers) {
+std::shared_ptr<Building> Building::workBoat(int16_t accumulatedHammers) {
     return Building::create("WORK BOAT", false, 30, accumulatedHammers);
 }
 
-std::shared_ptr<Building> Building::axeman(int8_t accumulatedHammers) {
+std::shared_ptr<Building> Building::axeman(int16_t accumulatedHammers) {
     return Building::create("AXEMAN   ", false, 35, accumulatedHammers);
 }
 
-std::shared_ptr<Building> Building::settler(int8_t accumulatedHammers) {
+std::shared_ptr<Building> Building::chariot(int16_t accumulatedHammers) {
+    return Building::create("CHARIOT  ", false, 25, accumulatedHammers);
+}
+
+std::shared_ptr<Building> Building::settler(int16_t accumulatedHammers) {
     return Building::create("SETTLER  ", true,  100, accumulatedHammers);
 }
 
-std::shared_ptr<Building> Building::worker(int8_t accumulatedHammers) {
+std::shared_ptr<Building> Building::worker(int16_t accumulatedHammers) {
     return Building::create("WORKER   ", true,  60, accumulatedHammers);
 }

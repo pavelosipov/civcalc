@@ -19,7 +19,7 @@ public:
     Tile(const Tile &other) = delete;
     Tile &operator = (const Tile &other) = delete;
 
-    static std::shared_ptr<Tile> create(uint8_t food, uint8_t hammers, uint8_t commerce);
+    static std::shared_ptr<Tile> create(int16_t food, int16_t hammers, int16_t commerce);
 
     const Goods &goods() const;
     void setGoods(const Goods &goods);

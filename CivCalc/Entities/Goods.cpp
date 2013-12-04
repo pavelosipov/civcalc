@@ -15,7 +15,7 @@ Goods::Goods()
     , commerce(0)
 {}
 
-Goods::Goods(int8_t _food, int8_t _hammers, int8_t _commerce)
+Goods::Goods(int16_t _food, int16_t _hammers, int16_t _commerce)
     : food(_food)
     , hammers(_hammers)
     , commerce(_commerce)

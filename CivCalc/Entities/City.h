@@ -76,7 +76,6 @@ public:
 private:
     uint8_t population_;
     uint8_t happiness_;
-    uint8_t unhappiness_;
     Goods accumulatedGoods_;
     typedef std::vector<std::shared_ptr<Tile>> TileSet;
     TileSet tiles_;

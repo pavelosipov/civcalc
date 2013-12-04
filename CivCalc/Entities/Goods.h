@@ -13,7 +13,7 @@
 
 struct Goods {
     Goods();
-    Goods(int8_t food, int8_t hammers, int8_t commerce);
+    Goods(int16_t food, int16_t hammers, int16_t commerce);
     Goods(const Goods &other);
     Goods(Goods &&other);
     
@@ -26,7 +26,7 @@ struct Goods {
 
     friend std::ostream& operator << (std::ostream &stream, const Goods &goods);
     
-    int8_t food;
-    int8_t hammers;
-    int8_t commerce;
+    int16_t food;
+    int16_t hammers;
+    int16_t commerce;
 };

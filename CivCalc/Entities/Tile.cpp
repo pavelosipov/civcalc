@@ -29,6 +29,6 @@ std::ostream& operator << (std::ostream &stream, const Tile &tile) {
     return stream;
 }
 
-std::shared_ptr<Tile> Tile::create(uint8_t food, uint8_t hammers, uint8_t commerce) {
+std::shared_ptr<Tile> Tile::create(int16_t food, int16_t hammers, int16_t commerce) {
     return std::make_shared<Tile>(Goods(food, hammers, commerce));
 }

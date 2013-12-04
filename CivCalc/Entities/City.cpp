@@ -15,14 +15,14 @@
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string.h>
 
-static const uint8_t WhipHammersCount = 30;
+static const int16_t WhipHammersCount = 30;
 
 City::City()
     : population_(1)
     , happiness_(4)
-    , unhappiness_(1)
     , tiles_({Tile::create(2, 1, 1)})
 {}
 
@@ -43,11 +43,7 @@ void City::setHappiness(uint8_t happiness) {
 }
 
 uint8_t City::unhappiness() const {
-    return happiness_;
-}
-
-void City::setUnhappiness(uint8_t unhappiness) {
-    unhappiness_ = unhappiness;
+    return population_;
 }
 
 const Goods &City::accumulatedGoods() const {
@@ -89,7 +85,10 @@ void City::setTiles(const std::vector<std::shared_ptr<Tile>> &tiles) {
 
 void City::swapTiles(size_t lpos, size_t rpos) {
     assert(lpos < tiles_.size() && rpos < tiles_.size());
+    std::ostringstream eventStream;
+    eventStream << std::setfill('0') << "SWAP: " << *tiles_[lpos] << " <-> " << *tiles_[rpos];
     std::swap(tiles_[lpos], tiles_[rpos]);
+    turnLogger().addEvent(eventStream.str());
 }
 
 void City::removeTile(std::shared_ptr<Tile> tile) {
@@ -98,7 +97,7 @@ void City::removeTile(std::shared_ptr<Tile> tile) {
 
 bool City::canWhip() const {
     if (std::shared_ptr<Building> topBuilding = buildingQueue_.front()) {
-        const int8_t whippingHammers = topBuilding->requiredHammers() - topBuilding->accumulatedHammers();
+        const int16_t whippingHammers = topBuilding->requiredHammers() - topBuilding->accumulatedHammers();
         return 0 < whippingHammers && whippingHammers <= (population_ - 1) * WhipHammersCount;
     }
     return false;
@@ -107,7 +106,7 @@ bool City::canWhip() const {
 void City::whip() {
     assert(canWhip());
     std::shared_ptr<Building> topBuilding = buildingQueue_.front();
-    const int8_t whippingHammers = topBuilding->requiredHammers() - topBuilding->accumulatedHammers();
+    const int16_t whippingHammers = topBuilding->requiredHammers() - topBuilding->accumulatedHammers();
     const uint8_t populationCost = whippingHammers / WhipHammersCount + (whippingHammers % WhipHammersCount ? 1 : 0);
     population_ -= populationCost;
     accumulatedGoods_.hammers += populationCost * WhipHammersCount;
@@ -132,7 +131,7 @@ void City::processBuildingQueue(uint8_t turn, ActionQueue &actionQueue) {
 }
 
 Goods City::workTiles() const {
-    const uint8_t workingTilesCount = std::max(0, population_ - std::max(0, unhappiness_ - happiness_) + 1);
+    const uint8_t workingTilesCount = std::max(0, population_ - std::max(0, unhappiness() - happiness_) + 1);
     Goods turnGoods;
     for (int i = 0; i < workingTilesCount; ++i) {
         turnGoods += tiles_[i]->goods();
@@ -153,7 +152,7 @@ void City::produceBuilding(Goods &goods) {
 void City::grow(Goods &goods) {
     accumulatedGoods_.food += goods.food;
     goods.food = 0;
-    const int8_t nextPopulationFood = 20 + 2 * population_;
+    const int16_t nextPopulationFood = 20 + 2 * population_;
     if (accumulatedGoods_.food >= nextPopulationFood) {
         accumulatedGoods_.food -= nextPopulationFood;
         ++population_;
