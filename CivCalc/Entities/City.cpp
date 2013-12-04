@@ -32,16 +32,7 @@ uint8_t City::population() const {
 }
 
 void City::setPopulation(uint8_t population) {
-    const uint8_t oldWorkingTilesCount = workingTilesCount();
     population_ = population;
-    const uint8_t newWorkingTilesCount = workingTilesCount();
-    std::ostringstream eventStream;
-    if (newWorkingTilesCount > oldWorkingTilesCount) {
-        eventStream << std::setfill('0') << "+(" << *tiles_[newWorkingTilesCount - 1] << ")";
-    } else if (newWorkingTilesCount < oldWorkingTilesCount) {
-        eventStream << std::setfill('0') << "-(" << *tiles_[oldWorkingTilesCount - 1] << ")";
-    }
-    turnLogger().addEvent(eventStream.str());
 }
 
 uint8_t City::happiness() const {
@@ -95,14 +86,6 @@ void City::setTiles(const std::vector<std::shared_ptr<Tile>> &tiles) {
 
 void City::swapTiles(size_t lpos, size_t rpos) {
     assert(lpos < tiles_.size() && rpos < tiles_.size());
-    const uint8_t tilesCount = workingTilesCount();
-    std::ostringstream eventStream;
-    if (lpos < tilesCount && rpos >= tilesCount) {
-        eventStream << std::setfill('0') << "(" << *tiles_[rpos] << ") <-> (" << *tiles_[lpos] << ")";
-    } else if (rpos < tilesCount && lpos >= tilesCount) {
-        eventStream << std::setfill('0') << "(" << *tiles_[lpos] << ") <-> (" << *tiles_[rpos] << ")";
-    }
-    turnLogger().addEvent(eventStream.str());
     std::swap(tiles_[lpos], tiles_[rpos]);
 }
 
@@ -173,7 +156,7 @@ void City::grow(Goods &goods) {
     const int16_t nextPopulationFood = 20 + 2 * population_;
     if (accumulatedGoods_.food >= nextPopulationFood) {
         accumulatedGoods_.food -= nextPopulationFood;
-        setPopulation(population_ + 1);
+        ++population_;
     }
 }
 
@@ -193,6 +176,7 @@ void CityTurnLogger::addWhipEvent(uint8_t whipCount) {
 }
 
 void CityTurnLogger::setGoods(const Goods &goods) {
+    goodsChange_ = goods - goods_;
     goods_ = goods;
 }
 
@@ -210,6 +194,11 @@ void CityTurnLogger::logTurn(uint8_t turn, const City &city) {
         std::cout << events_[i] << "    ";
     }
     events_.clear();
+    if (!goodsChange_.isZero()) {
+        std::cout << std::setfill(' ');
+        std::cout << "±FPС: " << goodsChange_.food << "/" << goodsChange_.hammers << "/" << goodsChange_.commerce;
+        goodsChange_ = Goods();
+    }
     std::cout << std::endl;
 }
     

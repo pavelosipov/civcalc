@@ -29,6 +29,7 @@ public:
     
 private:
     Goods goods_;
+    Goods goodsChange_;
     std::deque<std::string> events_;
 };
 

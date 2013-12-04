@@ -76,3 +76,7 @@ std::ostream& operator << (std::ostream &stream, const Goods &goods) {
            << std::setw(3) << static_cast<int>(goods.commerce);
     return stream;
 }
+
+bool Goods::isZero() const {
+    return food == 0 && hammers == 0 && commerce == 0;
+}

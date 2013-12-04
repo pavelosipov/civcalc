@@ -26,6 +26,8 @@ struct Goods {
 
     friend std::ostream& operator << (std::ostream &stream, const Goods &goods);
     
+    bool isZero() const;
+    
     int16_t food;
     int16_t hammers;
     int16_t commerce;
