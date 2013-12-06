@@ -19,6 +19,7 @@
 #include <string.h>
 
 static const int16_t WhipHammersCount = 30;
+static const int16_t ChopHammersCount = 20;
 
 City::City()
     : population_(1)
@@ -75,6 +76,11 @@ void City::pushBuilding(std::shared_ptr<Building> building) {
     buildingQueue_.push_back(building);
 }
 
+void City::swapBuildings(size_t lpos, size_t rpos) {
+    assert(lpos < buildingQueue_.size() && rpos < buildingQueue_.size());
+    std::swap(buildingQueue_[lpos], buildingQueue_[rpos]);
+}
+
 std::shared_ptr<Tile> City::tileAt(size_t index) const {
     assert(index < tiles_.size());
     return tiles_[index];
@@ -91,6 +97,11 @@ void City::swapTiles(size_t lpos, size_t rpos) {
 
 void City::removeTile(std::shared_ptr<Tile> tile) {
     
+}
+
+void City::chop() {
+    turnLogger().addEvent("CHOP");
+    accumulatedGoods_.hammers += ChopHammersCount;
 }
 
 bool City::canWhip() const {

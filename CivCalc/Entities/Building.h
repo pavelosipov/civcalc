@@ -40,7 +40,9 @@ public:
         bool eatsFood,
         int16_t requiredHammers,
         int16_t accumulatedHammers = 0);
+    
     static std::shared_ptr<Building> warrior(int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> galley(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> workBoat(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> settler(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> worker(int16_t accumulatedHammers = 0);

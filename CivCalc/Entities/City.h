@@ -52,11 +52,14 @@ public:
     std::shared_ptr<Building> topBuilding() const;
     void setTopBuilding(std::shared_ptr<Building> building);
     void pushBuilding(std::shared_ptr<Building> building);
+    void swapBuildings(size_t lpos, size_t rpos);
     
     std::shared_ptr<Tile> tileAt(size_t index) const;
     void setTiles(const std::vector<std::shared_ptr<Tile>> &tiles);
     void swapTiles(size_t lpos, size_t rpos);
     void removeTile(std::shared_ptr<Tile> tile);
+    
+    void chop();
     
     bool canWhip() const;
     void whip();

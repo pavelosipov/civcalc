@@ -14,74 +14,91 @@
 #include "AnyAction.h"
 #include "WhipAction.h"
 
-int main(int argc, const char * argv[]) {
-    City utrechtCity;
-    utrechtCity.setTiles({
-        Tile::create(2, 1, 1), // city
+#include <iostream>
+
+static void processAmsterdamBuildingQueue() {
+    std::cout << "AMSTERDAM" << std::endl;
+    City city;
+    city.setPopulation(2);
+    city.setTiles({
+        Tile::create(2, 1, 11), // city
+        Tile::create(5, 0, 3),  // fish
+        Tile::create(4, 2, 1),  // cow
+        Tile::create(1, 1, 0)   // mine
+    });
+    city.setAccumulatedGoods(Goods(14, 15, 0));
+    city.pushBuilding(Building::worker());
+    city.pushBuilding(Building::settler());
+    city.pushBuilding(Building::worker());
+    ActionQueue actionQueue;
+    actionQueue.pushAction(8, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.setTopBuilding(Building::axeman());
+    }));
+    actionQueue.pushAction(10, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.tileAt(3)->setGoods(Goods(1, 3, 0)); // mine improved
+        city.swapBuildings(0, 1);
+        city.swapBuildings(1, 2);
+    }));
+    actionQueue.pushAction(13, WhipAction::create());
+    city.processBuildingQueue(0, actionQueue);
+}
+
+static void processUtrechtBuildingQueue() {
+    std::cout << std::endl << "UTRECHT" << std::endl;
+    City city;
+    city.setTiles({
+        Tile::create(2, 1, 2), // city
         Tile::create(5, 1, 1), // wheat
         Tile::create(1, 3, 1), // riverside mine
         Tile::create(3, 0, 0), // cows
-        Tile::create(2, 0, 3), // riverside graasland cottage
-        Tile::create(2, 0, 3)  // riverside graasland cottage
+        Tile::create(2, 0, 0), // riverside graasland
+        Tile::create(2, 0, 0)  // riverside graasland
     });
-    utrechtCity.setAccumulatedGoods(Goods(6, 0, 0));
-    utrechtCity.pushBuilding(Building::workBoat(2));
-    utrechtCity.pushBuilding(Building::axeman());
-    utrechtCity.pushBuilding(Building::chariot());
-    utrechtCity.pushBuilding(Building::settler());
-    utrechtCity.pushBuilding(Building::axeman());
+    city.setPopulation(2);
+    city.setAccumulatedGoods(Goods(4, 0, 0));
+    city.pushBuilding(Building::worker());
+    city.pushBuilding(Building::workBoat(10));
+    city.pushBuilding(Building::axeman());
     ActionQueue actionQueue;
-    actionQueue.pushAction(4, AnyAction::create([](City &city, Goods &turnGoods) {
-        city.setTopBuilding(Building::worker());
+    actionQueue.pushAction(11, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.tileAt(3)->setGoods(Goods(4, 2, 0)); // cows improved
     }));
-    actionQueue.pushAction(13, AnyAction::create([](City &city, Goods &turnGoods) {
-        city.tileAt(3)->setGoods(Goods(4, 2, 0));
-        city.swapTiles(2, 3);
+    city.processBuildingQueue(0, actionQueue);
+}
+
+static void processTheHagueBuildingQueue() {
+    std::cout << std::endl << "THE HAGUE" << std::endl;
+    City city;
+    city.setPopulation(1);
+    city.setTiles({
+        Tile::create(2, 1, 2), // city
+        Tile::create(1, 5, 0), // copper
+        Tile::create(4, 0, 3), // clam
+        Tile::create(2, 0, 3)  // fish
+    });
+    city.pushBuilding(Building::galley());
+    city.pushBuilding(Building::workBoat());
+    city.pushBuilding(Building::axeman());
+    ActionQueue actionQueue;
+    actionQueue.pushAction(1, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.swapTiles(1, 2);
     }));
-    actionQueue.pushAction(8, WhipAction::create());
-    actionQueue.pushAction(17, AnyAction::create([](City &city, Goods &turnGoods) {
-        city.swapTiles(3, 5);
+    actionQueue.pushAction(3, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.chop();
     }));
-    actionQueue.pushAction(30, WhipAction::create());
-    utrechtCity.processBuildingQueue(0, actionQueue);
+    actionQueue.pushAction(7, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.swapBuildings(0, 1);
+    }));
+    actionQueue.pushAction(8, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.swapBuildings(0, 1);
+    }));
+    actionQueue.pushAction(14, WhipAction::create());
+    city.processBuildingQueue(0, actionQueue);
+}
 
-//    City amsterdamCity;
-//    amsterdamCity.setPopulation(2);
-//    amsterdamCity.setTiles({
-//        Goods(2, 1, 9), // city
-//        Goods(5, 0, 3), // fish
-//        Goods(4, 2, 1), // cow
-//        Goods(1, 3, 0)  // mine
-//    });
-//    amsterdamCity.setAccumulatedGoods(Goods(0, 15, 0));
-//    UserEvents events;
-//    events.whipTurn = 15;
-//    events.whipCount = 1;
-//    events.revolutionTurn = -20;
-//    events.chopTurn = 14;
-//    amsterdamCity.enqueueBuilding(Building("WORKER   ", true,  60));
-//    amsterdamCity.enqueueBuilding(Building("WARRIOR  ", false, 15));
-//    amsterdamCity.enqueueBuilding(Building("SETTLER  ", true,  100));
-//    amsterdamCity.enqueueBuilding(Building("WORKER   ", true,  60));
-//    amsterdamCity.processBuildingQueue(events);
-
-//    City nonameCity;
-//    nonameCity.setPopulation(1);
-//    nonameCity.setTiles({
-//        Goods(2, 1, 1), // city
-//        Goods(4, 0, 3), // clam
-//        Goods(1, 5, 0), // copper
-//        Goods(5, 0, 3)  // fish
-//    });
-//    nonameCity.setAccumulatedGoods(Goods(00, 00, 00));
-//    UserEvents events;
-//    events.whipTurn = 11;
-//    events.whipCount = 1;
-//    events.revolutionTurn = -20;
-//    events.chopTurn = 0;
-//    nonameCity.enqueueBuilding(Building("GALLEY   ", false,  50));
-//    nonameCity.enqueueBuilding(Building("WORK BOAT", false,  30));
-//    nonameCity.processBuildingQueue(events);
-
+int main(int argc, const char * argv[]) {
+    processAmsterdamBuildingQueue();
+    processUtrechtBuildingQueue();
+    processTheHagueBuildingQueue();
     return 0;
 }

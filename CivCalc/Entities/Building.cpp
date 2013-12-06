@@ -70,6 +70,10 @@ std::shared_ptr<Building> Building::create(
     return std::make_shared<Building>(name, eatsFood, requiredHammers, accumulatedHammers);
 }
 
+std::shared_ptr<Building> Building::galley(int16_t accumulatedHammers) {
+    return Building::create("GALLEY   ", false, 50, accumulatedHammers);
+}
+
 std::shared_ptr<Building> Building::warrior(int16_t accumulatedHammers) {
     return Building::create("WARRIOR  ", false, 15, accumulatedHammers);
 }
