@@ -50,6 +50,7 @@ public:
     static std::shared_ptr<Building> chariot(int16_t accumulatedHammers = 0);
     // Buildings
     static std::shared_ptr<Building> barracks(int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> granary(int16_t accumulatedHammers = 0);
 
 private:
     const std::string name_;
