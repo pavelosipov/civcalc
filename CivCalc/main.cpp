@@ -69,7 +69,7 @@ static void processTheHagueBuildingQueue(uint8_t startTurn) {
     std::cout << std::endl << "THE HAGUE" << std::endl;
     City city;
     city.setPopulation(1);
-    city.setAccumulatedGoods(Goods(9, 0, 0));
+    city.setAccumulatedGoods(Goods(19, 0, 0));
     city.setTiles({
         Tile::create(2, 1, 2), // city
         Tile::create(4, 0, 3), // clam
@@ -80,14 +80,11 @@ static void processTheHagueBuildingQueue(uint8_t startTurn) {
     city.pushBuilding(Building::granary(7));
     city.pushBuilding(Building::barracks());
     ActionQueue actionQueue;
-    actionQueue.pushAction(startTurn + 1, AnyAction::create([](City &city, Goods &turnGoods) {
-        city.swapTiles(1, 2);
-    }));
-    actionQueue.pushAction(startTurn + 7, AnyAction::create([](City &city, Goods &turnGoods) {
+    actionQueue.pushAction(startTurn + 5, AnyAction::create([](City &city, Goods &turnGoods) {
         city.setTopBuilding(Building::settler());
     }));
-    actionQueue.pushAction(startTurn + 13, WhipAction::create());
-    actionQueue.pushAction(startTurn + 21, WhipAction::create());
+    actionQueue.pushAction(startTurn + 11, WhipAction::create());
+    actionQueue.pushAction(startTurn + 19, WhipAction::create());
     city.processBuildingQueue(startTurn, actionQueue);
 }
 
