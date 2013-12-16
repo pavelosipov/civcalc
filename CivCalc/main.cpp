@@ -78,7 +78,7 @@ static void processTheHagueBuildingQueue(uint8_t startTurn) {
     std::cout << std::endl << "THE HAGUE" << std::endl;
     City city;
     city.setPopulation(1);
-    city.setAccumulatedGoods(Goods(9, 0, 0));
+//    city.setAccumulatedGoods(Goods(0, 0, 0));
     city.setTiles({
         Tile::create(2, 1, 2), // city
         Tile::create(4, 0, 3), // clam
@@ -86,12 +86,10 @@ static void processTheHagueBuildingQueue(uint8_t startTurn) {
         Tile::create(2, 0, 3), // fish
         Tile::create(1, 1, 0)  // mine
     });
-    city.pushBuilding(Building::galley(28));
     city.pushBuilding(Building::workBoat());
-    city.pushBuilding(Building::barracks());
     city.pushBuilding(Building::axeman());
     ActionQueue actionQueue;
-    actionQueue.pushAction(startTurn + 8, WhipAction::create());
+    actionQueue.pushAction(startTurn + 1, WhipAction::create());
     actionQueue.pushAction(startTurn + 10, AnyAction::create([](City &city, Goods &turnGoods) {
         city.tileAt(3)->setGoods(Goods(5, 0, 3)); // fish improved
         city.swapTiles(2, 3);

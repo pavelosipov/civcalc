@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Goods.h"
+#include "CityBuilding.h"
 
 #include <deque>
 #include <memory>
@@ -18,6 +19,7 @@
 class ActionQueue;
 class Building;
 class City;
+class Granary;
 class Tile;
 
 class CityTurnLogger {
@@ -39,6 +41,7 @@ public:
     
     uint8_t population() const;
     void setPopulation(uint8_t population);
+    int16_t nextPopulationFood() const;
     
     uint8_t happiness() const;
     void setHappiness(uint8_t happiness);
@@ -53,6 +56,8 @@ public:
     void setTopBuilding(std::shared_ptr<Building> building);
     void pushBuilding(std::shared_ptr<Building> building);
     void swapBuildings(size_t lpos, size_t rpos);
+    
+    void addCityBuilding(std::shared_ptr<CityBuilding> building);
     
     std::shared_ptr<Tile> tileAt(size_t index) const;
     void setTiles(const std::vector<std::shared_ptr<Tile>> &tiles);
@@ -88,4 +93,6 @@ private:
     BuildingQueue buildingQueue_;
     std::queue<uint8_t> whipTurns_;
     std::unique_ptr<CityTurnLogger> turnLogger_;
+    typedef std::deque<std::shared_ptr<CityBuilding>> CityBuildings;
+    CityBuildings cityBuildings_;
 };

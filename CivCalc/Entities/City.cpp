@@ -36,6 +36,10 @@ void City::setPopulation(uint8_t population) {
     population_ = population;
 }
 
+int16_t City::nextPopulationFood() const {
+    return 20 + 2 * population_;
+}
+
 uint8_t City::happiness() const {
     return happiness_;
 }
@@ -79,6 +83,10 @@ void City::pushBuilding(std::shared_ptr<Building> building) {
 void City::swapBuildings(size_t lpos, size_t rpos) {
     assert(lpos < buildingQueue_.size() && rpos < buildingQueue_.size());
     std::swap(buildingQueue_[lpos], buildingQueue_[rpos]);
+}
+
+void City::addCityBuilding(std::shared_ptr<CityBuilding> building) {
+    cityBuildings_.push_back(building);
 }
 
 std::shared_ptr<Tile> City::tileAt(size_t index) const {
@@ -157,16 +165,18 @@ void City::produceBuilding(Goods &goods) {
         buildingQueue_.pop_front();
     }
     if (!buildingQueue_.empty()) {
-        buildingQueue_.front()->applyGoods(goods);
+        Building *current
+        buildingQueue_.front()->consumeGoods(goods);
+        if (
     }
 }
 
 void City::grow(Goods &goods) {
     accumulatedGoods_.food += goods.food;
     goods.food = 0;
-    const int16_t nextPopulationFood = 20 + 2 * population_;
-    if (accumulatedGoods_.food >= nextPopulationFood) {
-        accumulatedGoods_.food -= nextPopulationFood;
+    const int16_t growFood = nextPopulationFood();
+    if (accumulatedGoods_.food >= growFood) {
+        accumulatedGoods_.food -= growFood;
         ++population_;
     }
 }

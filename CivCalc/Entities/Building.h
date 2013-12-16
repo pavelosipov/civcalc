@@ -11,9 +11,10 @@
 #include <string>
 #include <memory>
 
+class City;
 class Goods;
 
-class Building {
+class Building : public std::enable_shared_from_this<Building> {
 public:
     Building(
         const std::string &name,
@@ -21,6 +22,8 @@ public:
         int16_t requiredHammers,
         int16_t accumulatedHammers);
     Building(Building &&other);
+    virtual ~Building();
+    
     Building(const Building &other) = delete;
     Building &operator = (const Building &other) = delete;
     
@@ -30,7 +33,8 @@ public:
     void setAccumulatedHammers(int16_t hammers);
 
     bool isComleted() const;
-    void applyGoods(Goods &goods);
+    virtual void consumeGoods(City &city, Goods &goods);
+    virtual void workGoods(City &city, Goods &goods);
     
     friend std::ostream& operator << (std::ostream &stream, const Building &building);
     

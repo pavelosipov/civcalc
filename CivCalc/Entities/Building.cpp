@@ -25,6 +25,9 @@ Building::Building(Building &&other)
     , eatsFood_(other.eatsFood_)
 {}
 
+Building::~Building()
+{}
+
 bool Building::isComleted() const {
     return requiredHammers_ == accumulatedHammers_;
 }
@@ -41,7 +44,7 @@ void Building::setAccumulatedHammers(int16_t hammers) {
     accumulatedHammers_ = hammers;
 }
 
-void Building::applyGoods(Goods &goods) {
+void Building::consumeGoods(City &city, Goods &goods) {
     int16_t consumedHammers = goods.hammers;
     goods.hammers = 0;
     if (eatsFood_) {
@@ -54,6 +57,8 @@ void Building::applyGoods(Goods &goods) {
         accumulatedHammers_ = requiredHammers_;
     }
 }
+
+void Building::workGoods(City &city, Goods &goods) {}
 
 std::ostream& operator << (std::ostream &stream, const Building &building) {
     stream << building.name_ << " ("
