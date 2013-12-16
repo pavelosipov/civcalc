@@ -53,6 +53,8 @@ static void processUtrechtBuildingQueue(uint8_t startTurn) {
     city.setAccumulatedGoods(Goods(15, 0, 0));
     city.pushBuilding(Building::warrior(12));
     city.pushBuilding(Building::granary(4));
+    city.pushBuilding(Building::axeman());
+    city.pushBuilding(Building::axeman());
     ActionQueue actionQueue;
     actionQueue.pushAction(startTurn + 3, AnyAction::create([](City &city, Goods &turnGoods) {
         city.tileAt(4)->setGoods(Goods(2, 0, 3));
@@ -77,10 +79,15 @@ static void processTheHagueBuildingQueue(uint8_t startTurn) {
         Tile::create(1, 5, 0), // copper
         Tile::create(1, 1, 0)  // mine
     });
-    city.pushBuilding(Building::granary(7));
-    city.pushBuilding(Building::barracks());
+    city.pushBuilding(Building::workBoat());
+    city.pushBuilding(Building::axeman());
     ActionQueue actionQueue;
-    actionQueue.pushAction(startTurn + 5, AnyAction::create([](City &city, Goods &turnGoods) {
+    actionQueue.pushAction(startTurn + 1, WhipAction::create());
+    actionQueue.pushAction(startTurn + 10, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.tileAt(3)->setGoods(Goods(5, 0, 3)); // fish improved
+        city.swapTiles(2, 3);
+    }));
+    actionQueue.pushAction(startTurn + 14, AnyAction::create([](City &city, Goods &turnGoods) {
         city.setTopBuilding(Building::settler());
     }));
     actionQueue.pushAction(startTurn + 11, WhipAction::create());

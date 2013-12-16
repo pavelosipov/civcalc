@@ -16,6 +16,8 @@
 		47296DE9184B56FC0095301A /* Action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DE3184B56FC0095301A /* Action.cpp */; };
 		47296DEA184B56FC0095301A /* ActionQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DE5184B56FC0095301A /* ActionQueue.cpp */; };
 		47296DEB184B56FC0095301A /* AnyAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296DE7184B56FC0095301A /* AnyAction.cpp */; };
+		47296E03185C633E0095301A /* CityBuilding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296E01185C633E0095301A /* CityBuilding.cpp */; };
+		47296E06185C65820095301A /* Granary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47296E04185C65820095301A /* Granary.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,6 +51,10 @@
 		47296DE6184B56FC0095301A /* ActionQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionQueue.h; sourceTree = "<group>"; };
 		47296DE7184B56FC0095301A /* AnyAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnyAction.cpp; sourceTree = "<group>"; };
 		47296DE8184B56FC0095301A /* AnyAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnyAction.h; sourceTree = "<group>"; };
+		47296E01185C633E0095301A /* CityBuilding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CityBuilding.cpp; sourceTree = "<group>"; };
+		47296E02185C633E0095301A /* CityBuilding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityBuilding.h; sourceTree = "<group>"; };
+		47296E04185C65820095301A /* Granary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Granary.cpp; sourceTree = "<group>"; };
+		47296E05185C65820095301A /* Granary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Granary.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +101,12 @@
 				47296DC9184A93300095301A /* Building.h */,
 				47296DCA184A93300095301A /* City.cpp */,
 				47296DCB184A93300095301A /* City.h */,
+				47296E01185C633E0095301A /* CityBuilding.cpp */,
+				47296E02185C633E0095301A /* CityBuilding.h */,
 				47296DCE184A93300095301A /* Goods.cpp */,
 				47296DCF184A93300095301A /* Goods.h */,
+				47296E04185C65820095301A /* Granary.cpp */,
+				47296E05185C65820095301A /* Granary.h */,
 				47296DD0184A93300095301A /* Tile.cpp */,
 				47296DD1184A93300095301A /* Tile.h */,
 			);
@@ -171,6 +181,8 @@
 			files = (
 				47296DE9184B56FC0095301A /* Action.cpp in Sources */,
 				21603F82184C679B00F2A398 /* WhipAction.cpp in Sources */,
+				47296E03185C633E0095301A /* CityBuilding.cpp in Sources */,
+				47296E06185C65820095301A /* Granary.cpp in Sources */,
 				47296DEB184B56FC0095301A /* AnyAction.cpp in Sources */,
 				47296DD3184A93300095301A /* City.cpp in Sources */,
 				47296DD5184A93300095301A /* Goods.cpp in Sources */,

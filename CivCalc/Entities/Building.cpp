@@ -8,6 +8,7 @@
 
 #include "Building.h"
 #include "Goods.h"
+#include "Granary.h"
 #include <iomanip>
 #include <string>
 
@@ -25,6 +26,13 @@ Building::Building(Building &&other)
     , eatsFood_(other.eatsFood_)
 {}
 
+Building::~Building()
+{}
+
+const std::string &Building::name() const {
+    return name_;
+}
+
 bool Building::isComleted() const {
     return requiredHammers_ == accumulatedHammers_;
 }
@@ -41,7 +49,7 @@ void Building::setAccumulatedHammers(int16_t hammers) {
     accumulatedHammers_ = hammers;
 }
 
-void Building::applyGoods(Goods &goods) {
+void Building::consumeGoods(City &city, Goods &goods) {
     int16_t consumedHammers = goods.hammers;
     goods.hammers = 0;
     if (eatsFood_) {
@@ -103,5 +111,5 @@ std::shared_ptr<Building> Building::barracks(int16_t accumulatedHammers) {
 }
 
 std::shared_ptr<Building> Building::granary(int16_t accumulatedHammers) {
-    return Building::create("GRANARY  ", false,  60, accumulatedHammers);
+    return std::make_shared<Granary>(accumulatedHammers);
 }

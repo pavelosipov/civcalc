@@ -36,6 +36,10 @@ void City::setPopulation(uint8_t population) {
     population_ = population;
 }
 
+int16_t City::nextPopulationFood() const {
+    return 20 + 2 * population_;
+}
+
 uint8_t City::happiness() const {
     return happiness_;
 }
@@ -79,6 +83,10 @@ void City::pushBuilding(std::shared_ptr<Building> building) {
 void City::swapBuildings(size_t lpos, size_t rpos) {
     assert(lpos < buildingQueue_.size() && rpos < buildingQueue_.size());
     std::swap(buildingQueue_[lpos], buildingQueue_[rpos]);
+}
+
+void City::addCityBuilding(std::shared_ptr<CityBuilding> building) {
+    cityBuildings_.push_back(building);
 }
 
 std::shared_ptr<Tile> City::tileAt(size_t index) const {
@@ -132,6 +140,7 @@ void City::processBuildingQueue(uint8_t turn, ActionQueue &actionQueue) {
         turnGoods.hammers += accumulatedGoods_.hammers;
         accumulatedGoods_.hammers = 0;
         produceBuilding(turnGoods);
+        applyCityBuildings(turnGoods);
         grow(turnGoods);
         accumulatedGoods_ += turnGoods;
         ++turn;
@@ -153,21 +162,33 @@ Goods City::workTiles() const {
 }
 
 void City::produceBuilding(Goods &goods) {
-    if (!buildingQueue_.empty() && buildingQueue_.front()->isComleted()) {
-        buildingQueue_.pop_front();
-    }
     if (!buildingQueue_.empty()) {
-        buildingQueue_.front()->applyGoods(goods);
+        buildingQueue_.front()->consumeGoods(*this, goods);
+        if (buildingQueue_.front()->isComleted()) {
+            std::ostringstream eventLog;
+            eventLog << "-> " << buildingQueue_.front()->name();
+            turnLogger().addEvent(eventLog.str());
+            buildingQueue_.pop_front();
+        }
     }
+}
+
+void City::applyCityBuildings(Goods &goods) {
+    std::for_each(cityBuildings_.begin(), cityBuildings_.end(), [&](std::shared_ptr<CityBuilding> building) {
+        building->processTurnGoods(*this, goods);
+    });
 }
 
 void City::grow(Goods &goods) {
     accumulatedGoods_.food += goods.food;
     goods.food = 0;
-    const int16_t nextPopulationFood = 20 + 2 * population_;
-    if (accumulatedGoods_.food >= nextPopulationFood) {
-        accumulatedGoods_.food -= nextPopulationFood;
+    const int16_t growFood = nextPopulationFood();
+    if (accumulatedGoods_.food >= growFood) {
+        accumulatedGoods_.food -= growFood;
         ++population_;
+        std::for_each(cityBuildings_.begin(), cityBuildings_.end(), [&](std::shared_ptr<CityBuilding> building) {
+            building->processCityGrowth(*this);
+        });
     }
 }
 
