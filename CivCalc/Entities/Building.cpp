@@ -8,6 +8,7 @@
 
 #include "Building.h"
 #include "Goods.h"
+#include "Granary.h"
 #include <iomanip>
 #include <string>
 
@@ -27,6 +28,10 @@ Building::Building(Building &&other)
 
 Building::~Building()
 {}
+
+const std::string &Building::name() const {
+    return name_;
+}
 
 bool Building::isComleted() const {
     return requiredHammers_ == accumulatedHammers_;
@@ -57,8 +62,6 @@ void Building::consumeGoods(City &city, Goods &goods) {
         accumulatedHammers_ = requiredHammers_;
     }
 }
-
-void Building::workGoods(City &city, Goods &goods) {}
 
 std::ostream& operator << (std::ostream &stream, const Building &building) {
     stream << building.name_ << " ("
@@ -108,5 +111,5 @@ std::shared_ptr<Building> Building::barracks(int16_t accumulatedHammers) {
 }
 
 std::shared_ptr<Building> Building::granary(int16_t accumulatedHammers) {
-    return Building::create("GRANARY  ", false,  60, accumulatedHammers);
+    return std::make_shared<Granary>(accumulatedHammers);
 }

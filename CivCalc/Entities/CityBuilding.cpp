@@ -20,7 +20,7 @@ CityBuilding::CityBuilding(
 void CityBuilding::consumeGoods(City &city, Goods &goods) {
     Building::consumeGoods(city, goods);
     if (isComleted()) {
-        city.addCityBuilding(shared_from_this());
+        city.addCityBuilding(std::static_pointer_cast<CityBuilding>(shared_from_this()));
     }
 }
 

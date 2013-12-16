@@ -63,6 +63,8 @@ static void processUtrechtBuildingQueue(uint8_t startTurn) {
     city.setAccumulatedGoods(Goods(9, 0, 0));
     city.pushBuilding(Building::warrior());
     city.pushBuilding(Building::granary(4));
+    city.pushBuilding(Building::axeman());
+    city.pushBuilding(Building::axeman());
     ActionQueue actionQueue;
     actionQueue.pushAction(startTurn + 2, AnyAction::create([](City &city, Goods &turnGoods) {
         city.swapTiles(2, 5);

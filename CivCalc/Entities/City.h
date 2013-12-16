@@ -77,6 +77,7 @@ private:
     uint8_t workingTilesCount() const;
     Goods workTiles() const;
     void produceBuilding(Goods &goods);
+    void applyCityBuildings(Goods &goods);
     void grow(Goods &goods);
     
 public:

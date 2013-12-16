@@ -10,13 +10,14 @@
 #include "City.h"
 #include "Goods.h"
 #include <algorithm>
+#include <sstream>
 
 Granary::Granary()
     : Granary(0)
 {}
 
 Granary::Granary(int16_t accumulatedHammers)
-    : CityBuilding("Granary", false, 60, accumulatedHammers)
+    : CityBuilding("GRANARY  ", false, 60, accumulatedHammers)
     , accumulatedFood_(0)
 {}
 
@@ -31,7 +32,10 @@ int16_t Granary::accumulatedFood() const {
 void Granary::processTurnGoods(City &city, Goods &turnGoods) {
     const int16_t capacity = city.nextPopulationFood() / 2;
     if (accumulatedFood_ < capacity) {
-        accumulatedFood_ = std::max<int16_t>(accumulatedFood_ + turnGoods.food, capacity);
+        accumulatedFood_ = std::min<int16_t>(accumulatedFood_ + turnGoods.food, capacity);
+        std::ostringstream eventLog;
+        eventLog << "GRANARY(" << accumulatedFood_ << "/" << capacity << ")";
+        city.turnLogger().addEvent(eventLog.str());
     }
 }
 

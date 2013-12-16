@@ -27,6 +27,8 @@ public:
     Building(const Building &other) = delete;
     Building &operator = (const Building &other) = delete;
     
+    const std::string &name() const;
+    
     int16_t requiredHammers() const;
     
     int16_t accumulatedHammers() const;
@@ -34,7 +36,6 @@ public:
 
     bool isComleted() const;
     virtual void consumeGoods(City &city, Goods &goods);
-    virtual void workGoods(City &city, Goods &goods);
     
     friend std::ostream& operator << (std::ostream &stream, const Building &building);
     

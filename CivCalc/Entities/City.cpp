@@ -140,6 +140,7 @@ void City::processBuildingQueue(uint8_t turn, ActionQueue &actionQueue) {
         turnGoods.hammers += accumulatedGoods_.hammers;
         accumulatedGoods_.hammers = 0;
         produceBuilding(turnGoods);
+        applyCityBuildings(turnGoods);
         grow(turnGoods);
         accumulatedGoods_ += turnGoods;
         ++turn;
@@ -161,14 +162,21 @@ Goods City::workTiles() const {
 }
 
 void City::produceBuilding(Goods &goods) {
-    if (!buildingQueue_.empty() && buildingQueue_.front()->isComleted()) {
-        buildingQueue_.pop_front();
-    }
     if (!buildingQueue_.empty()) {
-        Building *current
-        buildingQueue_.front()->consumeGoods(goods);
-        if (
+        buildingQueue_.front()->consumeGoods(*this, goods);
+        if (buildingQueue_.front()->isComleted()) {
+            std::ostringstream eventLog;
+            eventLog << "-> " << buildingQueue_.front()->name();
+            turnLogger().addEvent(eventLog.str());
+            buildingQueue_.pop_front();
+        }
     }
+}
+
+void City::applyCityBuildings(Goods &goods) {
+    std::for_each(cityBuildings_.begin(), cityBuildings_.end(), [&](std::shared_ptr<CityBuilding> building) {
+        building->processTurnGoods(*this, goods);
+    });
 }
 
 void City::grow(Goods &goods) {
@@ -178,6 +186,9 @@ void City::grow(Goods &goods) {
     if (accumulatedGoods_.food >= growFood) {
         accumulatedGoods_.food -= growFood;
         ++population_;
+        std::for_each(cityBuildings_.begin(), cityBuildings_.end(), [&](std::shared_ptr<CityBuilding> building) {
+            building->processCityGrowth(*this);
+        });
     }
 }
 
