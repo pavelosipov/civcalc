@@ -18,7 +18,6 @@
 #include <sstream>
 #include <string.h>
 
-static const int16_t WhipHammersCount = 30;
 static const int16_t ChopHammersCount = 20;
 
 City::City()
@@ -112,21 +111,32 @@ void City::chop() {
     accumulatedGoods_.hammers += ChopHammersCount;
 }
 
+int16_t City::whipHammersCount() const {
+    if (buildingQueue_.empty()) {
+        return 0;
+    }
+    return buildingQueue_.front()->accumulatedHammers() > 0 ? 30 : 20;
+}
+
 bool City::canWhip() const {
+    if (buildingQueue_.empty()) {
+        return false;
+    }
     if (std::shared_ptr<Building> topBuilding = buildingQueue_.front()) {
         const int16_t whippingHammers = topBuilding->requiredHammers() - topBuilding->accumulatedHammers();
-        return 0 < whippingHammers && whippingHammers <= (population_ - 1) * WhipHammersCount;
+        return 0 < whippingHammers && whippingHammers <= (population_ - 1) * whipHammersCount();
     }
     return false;
 }
 
 void City::whip() {
     assert(canWhip());
+    const int16_t whipIncome = whipHammersCount();
     std::shared_ptr<Building> topBuilding = buildingQueue_.front();
     const int16_t whippingHammers = topBuilding->requiredHammers() - topBuilding->accumulatedHammers();
-    const uint8_t populationCost = whippingHammers / WhipHammersCount + (whippingHammers % WhipHammersCount ? 1 : 0);
+    const uint8_t populationCost = whippingHammers / whipIncome + (whippingHammers % whipIncome ? 1 : 0);
     population_ -= populationCost;
-    accumulatedGoods_.hammers += populationCost * WhipHammersCount;
+    accumulatedGoods_.hammers += populationCost * whipIncome;
     turnLogger().addWhipEvent(populationCost);
 }
 
@@ -137,12 +147,12 @@ void City::processBuildingQueue(uint8_t turn, ActionQueue &actionQueue) {
         turnGoods += workTiles();
         turnLogger_->setGoods(turnGoods);
         turnLogger_->logTurn(turn, *this);
+        applyCityBuildings(turnGoods);
         turnGoods.hammers += accumulatedGoods_.hammers;
         accumulatedGoods_.hammers = 0;
         produceBuilding(turnGoods);
-        applyCityBuildings(turnGoods);
-        grow(turnGoods);
         accumulatedGoods_ += turnGoods;
+        grow(turnGoods);
         ++turn;
     }
 }
@@ -180,11 +190,8 @@ void City::applyCityBuildings(Goods &goods) {
 }
 
 void City::grow(Goods &goods) {
-    accumulatedGoods_.food += goods.food;
-    goods.food = 0;
-    const int16_t growFood = nextPopulationFood();
-    if (accumulatedGoods_.food >= growFood) {
-        accumulatedGoods_.food -= growFood;
+    if (accumulatedGoods_.food >= nextPopulationFood()) {
+        accumulatedGoods_.food -= nextPopulationFood();
         ++population_;
         std::for_each(cityBuildings_.begin(), cityBuildings_.end(), [&](std::shared_ptr<CityBuilding> building) {
             building->processCityGrowth(*this);

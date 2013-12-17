@@ -33,10 +33,15 @@ void Granary::processTurnGoods(City &city, Goods &turnGoods) {
     const int16_t capacity = city.nextPopulationFood() / 2;
     if (accumulatedFood_ < capacity) {
         accumulatedFood_ = std::min<int16_t>(accumulatedFood_ + turnGoods.food, capacity);
-        std::ostringstream eventLog;
-        eventLog << "GRANARY(" << accumulatedFood_ << "/" << capacity << ")";
-        city.turnLogger().addEvent(eventLog.str());
     }
+    std::ostringstream eventLog;
+    eventLog << "GRANARY   (" << accumulatedFood_ << "/" << capacity << ")";
+    city.turnLogger().addEvent(eventLog.str());
+//    if (city.willGrow()) {
+//        Goods cityGoods = city.accumulatedGoods();
+//        cityGoods.food += accumulatedFood_;
+//        city.setAccumulatedGoods(cityGoods);
+//    }
 }
 
 void Granary::processCityGrowth(City &city) {

@@ -96,9 +96,42 @@ static void processTheHagueBuildingQueue(uint8_t startTurn) {
 }
 
 int main(int argc, const char * argv[]) {
-    const uint8_t startTurn = 55;
-    processAmsterdamBuildingQueue(startTurn);
-    processUtrechtBuildingQueue(startTurn);
-    processTheHagueBuildingQueue(startTurn);
+//    const uint8_t startTurn = 55;
+//    processAmsterdamBuildingQueue(startTurn);
+//    processUtrechtBuildingQueue(startTurn);
+//    processTheHagueBuildingQueue(startTurn);
+
+    City city;
+    city.setPopulation(1);
+    city.setHappiness(7);
+    city.setTiles({
+        Tile::create(2, 1, 9), // city
+        Tile::create(2, 1, 0), // forest
+        Tile::create(2, 0, 0), // graasland
+        Tile::create(2, 0, 0), // graasland
+        Tile::create(2, 0, 0), // graasland
+        Tile::create(2, 0, 0), // graasland
+        Tile::create(2, 0, 0), // graasland
+        Tile::create(2, 0, 0), // graasland
+        Tile::create(2, 0, 0), // graasland
+        Tile::create(6, 0, 0)  // graasland
+    });
+    city.pushBuilding(Building::granary(30));
+    city.pushBuilding(Building::create("SH       ", false, 200, 0));
+    ActionQueue actionQueue;
+    actionQueue.pushAction(6, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.swapTiles(1, 9);
+    }));
+    actionQueue.pushAction(6, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.swapTiles(2, 9);
+    }));
+    actionQueue.pushAction(16, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.setTopBuilding(Building::warrior());
+    }));
+    actionQueue.pushAction(17, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.whip();
+    }));
+    city.processBuildingQueue(1, actionQueue);
+
     return 0;
 }

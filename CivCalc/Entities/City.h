@@ -66,6 +66,7 @@ public:
     
     void chop();
     
+    int16_t whipHammersCount() const;
     bool canWhip() const;
     void whip();
     
