@@ -46,6 +46,7 @@ public:
         int16_t requiredHammers,
         int16_t accumulatedHammers = 0);
     // Units
+    static std::shared_ptr<Building> archer(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> warrior(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> galley(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> workBoat(int16_t accumulatedHammers = 0);
@@ -56,6 +57,7 @@ public:
     // Buildings
     static std::shared_ptr<Building> barracks(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> granary(int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> lighthouse(int16_t accumulatedHammers = 0);
 
 private:
     const std::string name_;

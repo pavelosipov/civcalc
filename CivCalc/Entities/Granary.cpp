@@ -17,7 +17,7 @@ Granary::Granary()
 {}
 
 Granary::Granary(int16_t accumulatedHammers)
-    : CityBuilding("GRANARY  ", false, 60, accumulatedHammers)
+    : CityBuilding("GRANARY   ", false, 60, accumulatedHammers)
     , accumulatedFood_(0)
 {}
 

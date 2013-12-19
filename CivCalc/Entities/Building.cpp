@@ -79,37 +79,46 @@ std::shared_ptr<Building> Building::create(
 }
 
 std::shared_ptr<Building> Building::galley(int16_t accumulatedHammers) {
-    return Building::create("GALLEY   ", false, 50, accumulatedHammers);
+    return Building::create("GALLEY    ", false, 50, accumulatedHammers);
+}
+
+std::shared_ptr<Building> Building::archer(int16_t accumulatedHammers) {
+    return Building::create("ARCHER    ", false, 25, accumulatedHammers);
 }
 
 std::shared_ptr<Building> Building::warrior(int16_t accumulatedHammers) {
-    return Building::create("WARRIOR  ", false, 15, accumulatedHammers);
+    return Building::create("WARRIOR   ", false, 15, accumulatedHammers);
 }
 
 std::shared_ptr<Building> Building::workBoat(int16_t accumulatedHammers) {
-    return Building::create("WORK BOAT", false, 30, accumulatedHammers);
+    return Building::create("WORK BOAT ", false, 30, accumulatedHammers);
 }
 
 std::shared_ptr<Building> Building::axeman(int16_t accumulatedHammers) {
-    return Building::create("AXEMAN   ", false, 35, accumulatedHammers);
+    return Building::create("AXEMAN    ", false, 35, accumulatedHammers);
 }
 
 std::shared_ptr<Building> Building::chariot(int16_t accumulatedHammers) {
-    return Building::create("CHARIOT  ", false, 25, accumulatedHammers);
+    return Building::create("CHARIOT   ", false, 25, accumulatedHammers);
 }
 
 std::shared_ptr<Building> Building::settler(int16_t accumulatedHammers) {
-    return Building::create("SETTLER  ", true,  100, accumulatedHammers);
+    return Building::create("SETTLER   ", true,  100, accumulatedHammers);
 }
 
 std::shared_ptr<Building> Building::worker(int16_t accumulatedHammers) {
-    return Building::create("WORKER   ", true,  60, accumulatedHammers);
+    return Building::create("WORKER    ", true,  60, accumulatedHammers);
 }
 
 std::shared_ptr<Building> Building::barracks(int16_t accumulatedHammers) {
-    return Building::create("BARRACKS ", false,  50, accumulatedHammers);
+    return Building::create("BARRACKS  ", false,  50, accumulatedHammers);
 }
 
 std::shared_ptr<Building> Building::granary(int16_t accumulatedHammers) {
     return std::make_shared<Granary>(accumulatedHammers);
 }
+
+std::shared_ptr<Building> Building::lighthouse(int16_t accumulatedHammers) {
+    return Building::create("LIGHTHOUSE", false,  60, accumulatedHammers);
+}
+
