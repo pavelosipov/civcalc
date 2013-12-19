@@ -18,7 +18,7 @@
 #include <sstream>
 #include <string.h>
 
-static const int16_t ChopHammersCount = 20;
+static const int16_t ChopHammersCount = 30;
 
 City::City()
     : population_(1)
@@ -108,7 +108,11 @@ void City::removeTile(std::shared_ptr<Tile> tile) {
 
 void City::chop() {
     turnLogger().addEvent("CHOP");
-    accumulatedGoods_.hammers += ChopHammersCount;
+    if (!buildingQueue_.empty()) {
+        Goods chopGoods(0, ChopHammersCount, 0);
+        buildingQueue_.front()->consumeGoods(*this, chopGoods);
+        accumulatedGoods_.hammers += chopGoods.hammers;
+    }
 }
 
 int16_t City::whipHammersCount() const {
@@ -123,7 +127,7 @@ bool City::canWhip() const {
         return false;
     }
     if (std::shared_ptr<Building> topBuilding = buildingQueue_.front()) {
-        const int16_t whippingHammers = topBuilding->requiredHammers() - topBuilding->accumulatedHammers();
+        const int16_t whippingHammers = topBuilding->leftHammers();
         return 0 < whippingHammers && whippingHammers <= (population_ - 1) * whipHammersCount();
     }
     return false;
@@ -133,10 +137,12 @@ void City::whip() {
     assert(canWhip());
     const int16_t whipIncome = whipHammersCount();
     std::shared_ptr<Building> topBuilding = buildingQueue_.front();
-    const int16_t whippingHammers = topBuilding->requiredHammers() - topBuilding->accumulatedHammers();
+    const int16_t whippingHammers = topBuilding->leftHammers();
     const uint8_t populationCost = whippingHammers / whipIncome + (whippingHammers % whipIncome ? 1 : 0);
     population_ -= populationCost;
-    accumulatedGoods_.hammers += populationCost * whipIncome;
+    Goods whipGoods(0, whipIncome, 0);
+    topBuilding->consumeGoods(*this, whipGoods);
+    accumulatedGoods_.hammers += whipGoods.hammers;
     turnLogger().addWhipEvent(populationCost);
 }
 
@@ -158,7 +164,7 @@ void City::processBuildingQueue(uint8_t turn, ActionQueue &actionQueue) {
 }
 
 uint8_t City::workingTilesCount() const {
-    return std::max(0, population_ - std::max(0, unhappiness() - happiness_) + 1);
+    return std::min<size_t>(std::max(0, population_ - std::max(0, unhappiness() - happiness_) + 1), tiles_.size());
 }
 
 Goods City::workTiles() const {

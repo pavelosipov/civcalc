@@ -30,9 +30,13 @@ public:
     const std::string &name() const;
     
     int16_t requiredHammers() const;
+    int16_t leftHammers() const;
     
     int16_t accumulatedHammers() const;
     void setAccumulatedHammers(int16_t hammers);
+
+    int16_t buildMultiplier() const;
+    void setBuildMultiplier(int16_t multiplier);
 
     bool isComleted() const;
     virtual void consumeGoods(City &city, Goods &goods);
@@ -58,10 +62,12 @@ public:
     static std::shared_ptr<Building> barracks(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> granary(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> lighthouse(int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> library(int16_t accumulatedHammers = 0);
 
 private:
     const std::string name_;
     const int16_t requiredHammers_;
     int16_t accumulatedHammers_;
+    int16_t buildMultiplier_;
     const bool eatsFood_;
 };
