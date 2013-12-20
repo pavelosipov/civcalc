@@ -155,6 +155,7 @@ void City::processBuildingQueue(uint8_t turn, ActionQueue &actionQueue) {
         grow(turnGoods);
         ++turn;
     }
+    turnLogger_->logTurn(turn, *this);
 }
 
 uint8_t City::workingTilesCount() const {

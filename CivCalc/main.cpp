@@ -148,25 +148,48 @@ static void processRomeBuildingQueue(uint8_t startTurn) {
     City city;
     city.setPopulation(1);
     city.setTiles({
-        Tile::create(2, 1, 1), // city
-        Tile::create(0, 3, 0), // plains hill with forest
-        Tile::create(2, 1, 0), // forest
-        Tile::create(2, 0, 3)
+        Tile::create(2, 1, 9), // city
+        Tile::create(4, 0, 3), // plains hill with forest
+        Tile::create(2, 1, 1), // wheat
+        Tile::create(2, 1, 1), // cows
+        Tile::create(1, 2, 0)  // hill
     });
-    city.pushBuilding(Building::workBoat());
     city.pushBuilding(Building::worker());
     city.pushBuilding(Building::warrior());
+    city.pushBuilding(Building::worker());
+    city.pushBuilding(Building::settler());
     ActionQueue actionQueue;
-    actionQueue.pushAction(startTurn + 8, AnyAction::create([](City &city, Goods &turnGoods) {
-        city.tileAt(3)->setGoods(Goods(4, 0, 3));
-        city.swapTiles(1, 3);
+    actionQueue.pushAction(startTurn + 2, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.turnLogger().addEvent("AGRICULTURE");
+    }));
+    actionQueue.pushAction(startTurn + 17, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.turnLogger().addEvent("BRONZE WORKING");
+    }));
+    actionQueue.pushAction(startTurn + 29, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.turnLogger().addEvent("ANIMAL HUSBANDRY");
+    }));
+    actionQueue.pushAction(startTurn + 17, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.tileAt(2)->setGoods(Goods(4, 1, 1));
+        city.turnLogger().addEvent("WHEAT FARM");
+    }));
+    actionQueue.pushAction(startTurn + 21, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.chop();
+    }));
+    actionQueue.pushAction(startTurn + 25, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.chop();
+    }));
+    actionQueue.pushAction(startTurn + 29, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.chop();
+    }));
+    actionQueue.pushAction(startTurn + 29, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.chop();
     }));
     city.processBuildingQueue(startTurn, actionQueue);
 }
 
 int main(int argc, const char * argv[]) {
-    const uint8_t startTurn = 70;
-    processRomeBuildingQueue(0);
+    const uint8_t startTurn = 8;
+    processRomeBuildingQueue(startTurn);
 //    processAmsterdamBuildingQueue(startTurn);
 //    processUtrechtBuildingQueue(startTurn);
 //    processTheHagueBuildingQueue(startTurn);
