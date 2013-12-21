@@ -160,6 +160,7 @@ static void processRomeBuildingQueue(uint8_t startTurn) {
     std::cout << "ROME" << std::endl;
     City city;
     city.setPopulation(1);
+    city.setAccumulatedGoods(Goods(0, 2, 0));
     city.setTiles({
         Tile::create(2, 1, 9), // city
         Tile::create(4, 0, 3), // plains hill with forest
@@ -188,18 +189,18 @@ static void processRomeBuildingQueue(uint8_t startTurn) {
     actionQueue.pushAction(startTurn + 25, AnyAction::create([](City &city, Goods &turnGoods) {
         city.chop();
     }));
-    actionQueue.pushAction(startTurn + 27, AnyAction::create([](City &city, Goods &turnGoods) {
-        turnGoods = Goods(-6, -3, -14);
-        city.turnLogger().addEvent("REVOLUTION");
-    }));
+//    actionQueue.pushAction(startTurn + 27, AnyAction::create([](City &city, Goods &turnGoods) {
+//        turnGoods = Goods(-6, -3, -14);
+//        city.turnLogger().addEvent("REVOLUTION");
+//    }));
     actionQueue.pushAction(startTurn + 29, AnyAction::create([](City &city, Goods &turnGoods) {
         city.chop();
-        city.whip();
+        city.chop();
     }));
-    actionQueue.pushAction(startTurn + 29, AnyAction::create([](City &city, Goods &turnGoods) {
-        city.tileAt(4)->setGoods(Goods(1, 3, 1));
-        city.turnLogger().addEvent("MINE");
-    }));
+//    actionQueue.pushAction(startTurn + 29, AnyAction::create([](City &city, Goods &turnGoods) {
+//        city.tileAt(4)->setGoods(Goods(1, 3, 1));
+//        city.turnLogger().addEvent("MINE");
+//    }));
     actionQueue.pushAction(startTurn + 33, AnyAction::create([](City &city, Goods &turnGoods) {
         city.tileAt(3)->setGoods(Goods(3, 3, 1));
         city.turnLogger().addEvent("PASTURE");
