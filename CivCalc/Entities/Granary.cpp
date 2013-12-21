@@ -37,11 +37,6 @@ void Granary::processTurnGoods(City &city, Goods &turnGoods) {
     std::ostringstream eventLog;
     eventLog << "GRANARY   (" << accumulatedFood_ << "/" << capacity << ")";
     city.turnLogger().addEvent(eventLog.str());
-//    if (city.willGrow()) {
-//        Goods cityGoods = city.accumulatedGoods();
-//        cityGoods.food += accumulatedFood_;
-//        city.setAccumulatedGoods(cityGoods);
-//    }
 }
 
 void Granary::processCityGrowth(City &city) {

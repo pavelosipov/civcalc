@@ -16,6 +16,7 @@ Building::Building(const std::string &name, bool eatsFood, int16_t requiredHamme
     : name_(name)
     , requiredHammers_(requiredHammers)
     , accumulatedHammers_(accumulatedHammers)
+    , buildMultiplier_(1)
     , eatsFood_(eatsFood)
 {}
 
@@ -23,6 +24,7 @@ Building::Building(Building &&other)
     : name_(std::move(other.name_))
     , requiredHammers_(other.requiredHammers_)
     , accumulatedHammers_(other.accumulatedHammers_)
+    , buildMultiplier_(1)
     , eatsFood_(other.eatsFood_)
 {}
 
@@ -41,12 +43,24 @@ int16_t Building::requiredHammers() const {
     return requiredHammers_;
 }
 
+int16_t Building::leftHammers() const {
+    return (requiredHammers_ - accumulatedHammers_) / buildMultiplier_;
+}
+
 int16_t Building::accumulatedHammers() const {
     return accumulatedHammers_;
 }
 
 void Building::setAccumulatedHammers(int16_t hammers) {
     accumulatedHammers_ = hammers;
+}
+
+int16_t Building::buildMultiplier() const {
+    return buildMultiplier_;
+}
+
+void Building::setBuildMultiplier(int16_t multiplier) {
+    buildMultiplier_ = multiplier;
 }
 
 void Building::consumeGoods(City &city, Goods &goods) {
@@ -56,9 +70,9 @@ void Building::consumeGoods(City &city, Goods &goods) {
         consumedHammers += goods.food;
         goods.food = 0;
     }
-    accumulatedHammers_ += consumedHammers;
+    accumulatedHammers_ += buildMultiplier_ * consumedHammers;
     if (accumulatedHammers_ > requiredHammers_) {
-        goods.hammers = accumulatedHammers_ - requiredHammers_;
+        goods.hammers = (accumulatedHammers_ - requiredHammers_) / buildMultiplier_;
         accumulatedHammers_ = requiredHammers_;
     }
 }
@@ -122,3 +136,8 @@ std::shared_ptr<Building> Building::lighthouse(int16_t accumulatedHammers) {
     return Building::create("LIGHTHOUSE", false,  60, accumulatedHammers);
 }
 
+std::shared_ptr<Building> Building::library(int16_t accumulatedHammers) {
+    std::shared_ptr<Building> library = Building::create("LIBRARY   ", false,  90, accumulatedHammers);
+    library->setBuildMultiplier(2);
+    return library;
+}

@@ -132,13 +132,26 @@ static void processNijmegenBuildingQueue(uint8_t startTurn) {
         Tile::create(2, 0, 3), // lake
         Tile::create(2, 0, 3)  // lake
     });
-    city.pushBuilding(Building::workBoat());
-    city.pushBuilding(Building::worker());
-    city.pushBuilding(Building::warrior());
+    city.pushBuilding(Building::library());
+    city.pushBuilding(Building::lighthouse(5));
+    city.pushBuilding(Building::granary());
+    city.pushBuilding(Building::archer());
     ActionQueue actionQueue;
-    actionQueue.pushAction(startTurn + 8, AnyAction::create([](City &city, Goods &turnGoods) {
-        city.tileAt(3)->setGoods(Goods(4, 0, 3));
-        city.swapTiles(1, 3);
+    actionQueue.pushAction(startTurn + 2, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.chop();
+    }));
+    actionQueue.pushAction(startTurn + 4, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.chop();
+    }));
+    actionQueue.pushAction(startTurn + 5, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.chop();
+    }));
+    actionQueue.pushAction(startTurn + 6, WhipAction::create());
+    actionQueue.pushAction(startTurn + 16, WhipAction::create());
+    actionQueue.pushAction(startTurn + 7, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.tileAt(1)->setGoods(Goods(3, 0, 3));
+        city.tileAt(2)->setGoods(Goods(3, 0, 3));
+        city.tileAt(3)->setGoods(Goods(3, 0, 3));
     }));
     city.processBuildingQueue(startTurn, actionQueue);
 }
@@ -190,6 +203,7 @@ static void processRomeBuildingQueue(uint8_t startTurn) {
 int main(int argc, const char * argv[]) {
     const uint8_t startTurn = 8;
     processRomeBuildingQueue(startTurn);
+//    processNijmegenBuildingQueue(startTurn);
 //    processAmsterdamBuildingQueue(startTurn);
 //    processUtrechtBuildingQueue(startTurn);
 //    processTheHagueBuildingQueue(startTurn);
