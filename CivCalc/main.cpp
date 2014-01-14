@@ -365,9 +365,39 @@ static void processRomeBuildingQueue(uint8_t startTurn) {
     city.processBuildingQueue(startTurn, actionQueue);
 }
 */
+
+static void processMiddleburgBuildingQueue(uint8_t startTurn) {
+    std::cout << "MIDDLEBURG" << std::endl;
+    City city;
+    city.setPopulation(3);
+    city.setTiles({
+        Tile::create(2, 1, 5), // city
+        Tile::create(4, 0, 3), // clam
+        Tile::create(4, 0, 3), // clam
+        Tile::create(1, 0, 3), // coast
+        Tile::create(1, 0, 3), // coast
+        Tile::create(1, 0, 3), // coast
+        Tile::create(1, 0, 3)  // coast
+    });
+    city.pushBuilding(Building::granary());
+    city.pushBuilding(Building::lighthouse());
+    city.pushBuilding(Building::archer());
+    ActionQueue actionQueue;
+    actionQueue.pushAction(6, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.whip();
+    }));
+    actionQueue.pushAction(12, AnyAction::create([](City &city, Goods &turnGoods) {
+        city.whip();
+        city.tileAt(3)->setGoods(Goods(2, 0, 3));
+        city.tileAt(4)->setGoods(Goods(2, 0, 3));
+    }));
+    city.processBuildingQueue(startTurn, actionQueue);
+}
+
 int main(int argc, const char * argv[]) {
-    const uint8_t startTurn = 8;
-    processRomeBuildingQueue(startTurn);
+    const uint8_t startTurn = 0;
+    processMiddleburgBuildingQueue(startTurn);
+//    processRomeBuildingQueue(startTurn);
 //    processNijmegenBuildingQueue(startTurn);
 //    processAmsterdamBuildingQueue(startTurn);
 //    processUtrechtBuildingQueue(startTurn);

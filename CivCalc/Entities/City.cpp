@@ -140,7 +140,7 @@ void City::whip() {
     const int16_t whippingHammers = topBuilding->leftHammers();
     const uint8_t populationCost = whippingHammers / whipIncome + (whippingHammers % whipIncome ? 1 : 0);
     population_ -= populationCost;
-    Goods whipGoods(0, whipIncome, 0);
+    Goods whipGoods(0, populationCost * whipIncome, 0);
     topBuilding->consumeGoods(*this, whipGoods);
     accumulatedGoods_.hammers += whipGoods.hammers;
     turnLogger().addWhipEvent(populationCost);
