@@ -18,11 +18,11 @@
 #include <sstream>
 #include <string.h>
 
-static const int16_t ChopHammersCount = 30;
+static const int16_t ChopHammersCount = 20;
 
 City::City()
     : population_(1)
-    , happiness_(4)
+    , happiness_(5)
     , tiles_({Tile::create(2, 1, 1)})
     , turnLogger_(new CityTurnLogger())
 {}

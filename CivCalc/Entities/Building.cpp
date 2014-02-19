@@ -125,7 +125,9 @@ std::shared_ptr<Building> Building::worker(int16_t accumulatedHammers) {
 }
 
 std::shared_ptr<Building> Building::barracks(int16_t accumulatedHammers) {
-    return Building::create("BARRACKS  ", false,  50, accumulatedHammers);
+    std::shared_ptr<Building> barracks = Building::create("BARRACKS  ", false,  50, accumulatedHammers);
+    barracks->setBuildMultiplier(2);
+    return barracks;
 }
 
 std::shared_ptr<Building> Building::granary(int16_t accumulatedHammers) {
