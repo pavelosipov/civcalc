@@ -112,6 +112,10 @@ std::shared_ptr<Building> Building::axeman(int16_t accumulatedHammers) {
     return Building::create("AXEMAN    ", false, 35, accumulatedHammers);
 }
 
+std::shared_ptr<Building> Building::spearman(int16_t accumulatedHammers) {
+    return Building::create("SPEARMAN  ", false, 35, accumulatedHammers);
+}
+
 std::shared_ptr<Building> Building::chariot(int16_t accumulatedHammers) {
     return Building::create("CHARIOT   ", false, 25, accumulatedHammers);
 }
@@ -139,7 +143,5 @@ std::shared_ptr<Building> Building::lighthouse(int16_t accumulatedHammers) {
 }
 
 std::shared_ptr<Building> Building::library(int16_t accumulatedHammers) {
-    std::shared_ptr<Building> library = Building::create("LIBRARY   ", false,  90, accumulatedHammers);
-    library->setBuildMultiplier(2);
-    return library;
+    return Building::create("LIBRARY   ", false,  90, accumulatedHammers);
 }

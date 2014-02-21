@@ -57,6 +57,7 @@ public:
     static std::shared_ptr<Building> settler(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> worker(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> axeman(int16_t accumulatedHammers = 0);
+    static std::shared_ptr<Building> spearman(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> chariot(int16_t accumulatedHammers = 0);
     // Buildings
     static std::shared_ptr<Building> barracks(int16_t accumulatedHammers = 0);
