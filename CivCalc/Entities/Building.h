@@ -36,7 +36,7 @@ public:
     void setAccumulatedHammers(int16_t hammers);
 
     int16_t buildMultiplier() const;
-    void setBuildMultiplier(int16_t multiplier);
+    void setBuildMultiplier(float multiplier);
 
     bool isComleted() const;
     virtual void consumeGoods(City &city, Goods &goods);
@@ -64,11 +64,13 @@ public:
     static std::shared_ptr<Building> granary(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> lighthouse(int16_t accumulatedHammers = 0);
     static std::shared_ptr<Building> library(int16_t accumulatedHammers = 0);
+    // Wonders
+    static std::shared_ptr<Building> stonehenge(int16_t accumulatedHammers = 0);
 
 private:
     const std::string name_;
     const int16_t requiredHammers_;
     int16_t accumulatedHammers_;
-    int16_t buildMultiplier_;
+    float buildMultiplier_;
     const bool eatsFood_;
 };

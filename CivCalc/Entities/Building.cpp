@@ -16,7 +16,7 @@ Building::Building(const std::string &name, bool eatsFood, int16_t requiredHamme
     : name_(name)
     , requiredHammers_(requiredHammers)
     , accumulatedHammers_(accumulatedHammers)
-    , buildMultiplier_(1)
+    , buildMultiplier_(1.0f)
     , eatsFood_(eatsFood)
 {}
 
@@ -24,7 +24,7 @@ Building::Building(Building &&other)
     : name_(std::move(other.name_))
     , requiredHammers_(other.requiredHammers_)
     , accumulatedHammers_(other.accumulatedHammers_)
-    , buildMultiplier_(1)
+    , buildMultiplier_(1.0f)
     , eatsFood_(other.eatsFood_)
 {}
 
@@ -59,7 +59,7 @@ int16_t Building::buildMultiplier() const {
     return buildMultiplier_;
 }
 
-void Building::setBuildMultiplier(int16_t multiplier) {
+void Building::setBuildMultiplier(float multiplier) {
     buildMultiplier_ = multiplier;
 }
 
@@ -130,7 +130,7 @@ std::shared_ptr<Building> Building::worker(int16_t accumulatedHammers) {
 
 std::shared_ptr<Building> Building::barracks(int16_t accumulatedHammers) {
     std::shared_ptr<Building> barracks = Building::create("BARRACKS  ", false,  50, accumulatedHammers);
-    barracks->setBuildMultiplier(2);
+    barracks->setBuildMultiplier(2.0f);
     return barracks;
 }
 
@@ -144,4 +144,10 @@ std::shared_ptr<Building> Building::lighthouse(int16_t accumulatedHammers) {
 
 std::shared_ptr<Building> Building::library(int16_t accumulatedHammers) {
     return Building::create("LIBRARY   ", false,  90, accumulatedHammers);
+}
+
+std::shared_ptr<Building> Building::stonehenge(int16_t accumulatedHammers) {
+    std::shared_ptr<Building> building = Building::create("STONEHENGE", false,  100, accumulatedHammers);
+    building->setBuildMultiplier(1.5f);
+    return building;
 }
