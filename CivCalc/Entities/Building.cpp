@@ -105,7 +105,9 @@ std::shared_ptr<Building> Building::warrior(int16_t accumulatedHammers) {
 }
 
 std::shared_ptr<Building> Building::workBoat(int16_t accumulatedHammers) {
-    return Building::create("WORK BOAT ", false, 30, accumulatedHammers);
+    std::shared_ptr<Building> building = Building::create("WORK BOAT ", false, 30, accumulatedHammers);
+    building->setBuildMultiplier(1.5f);
+    return building;                       
 }
 
 std::shared_ptr<Building> Building::axeman(int16_t accumulatedHammers) {
@@ -125,7 +127,9 @@ std::shared_ptr<Building> Building::settler(int16_t accumulatedHammers) {
 }
 
 std::shared_ptr<Building> Building::worker(int16_t accumulatedHammers) {
-    return Building::create("WORKER    ", true,  60, accumulatedHammers);
+    std::shared_ptr<Building> building = Building::create("WORKER    ", true,  60, accumulatedHammers);
+    building->setBuildMultiplier(1.35f);
+    return building;
 }
 
 std::shared_ptr<Building> Building::barracks(int16_t accumulatedHammers) {
@@ -148,6 +152,6 @@ std::shared_ptr<Building> Building::library(int16_t accumulatedHammers) {
 
 std::shared_ptr<Building> Building::stonehenge(int16_t accumulatedHammers) {
     std::shared_ptr<Building> building = Building::create("STONEHENGE", false,  100, accumulatedHammers);
-    building->setBuildMultiplier(1.5f);
+    building->setBuildMultiplier(1.35f);
     return building;
 }

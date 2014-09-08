@@ -167,24 +167,24 @@ static void processRomeBuildingQueueIndustrious(uint8_t startTurn) {
     city.pushBuilding(Building::stonehenge());
     city.pushBuilding(Building::warrior());
     ActionQueue actionQueue;
-    actionQueue.pushAction(startTurn + 7, AnyAction::create([](City &city, Goods &turnGoods){
+    actionQueue.pushAction(startTurn + 5, AnyAction::create([](City &city, Goods &turnGoods){
         city.turnLogger().addEvent("FOREST -> FISH");
         city.swapTiles(1, 2);
     }));
-    actionQueue.pushAction(startTurn + 19, AnyAction::create([](City &city, Goods &turnGoods){
+    actionQueue.pushAction(startTurn + 16, AnyAction::create([](City &city, Goods &turnGoods){
         city.turnLogger().addEvent("MINE");
         city.tileAt(5)->setGoods(Goods(1, 3, 0));
         city.swapTiles(2, 5);
     }));
-    actionQueue.pushAction(startTurn + 24, AnyAction::create([](City &city, Goods &turnGoods){
+    actionQueue.pushAction(startTurn + 19, AnyAction::create([](City &city, Goods &turnGoods){
         city.turnLogger().addEvent("CRAB NETS");
         city.tileAt(3)->setGoods(Goods(4, 0, 2));
         city.swapTiles(3, 2);
     }));
-    actionQueue.pushAction(startTurn + 24, AnyAction::create([](City &city, Goods &turnGoods){
+    actionQueue.pushAction(startTurn + 20, AnyAction::create([](City &city, Goods &turnGoods){
         city.chop();
     }));
-    actionQueue.pushAction(startTurn + 28, AnyAction::create([](City &city, Goods &turnGoods){
+    actionQueue.pushAction(startTurn + 24, AnyAction::create([](City &city, Goods &turnGoods){
         city.turnLogger().addEvent("MINE");
         city.tileAt(5)->setGoods(Goods(0, 4, 0));
         city.swapTiles(5, 4);
