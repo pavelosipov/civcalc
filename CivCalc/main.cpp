@@ -190,6 +190,9 @@ static void processRomeBuildingQueueIndustrious(uint8_t startTurn) {
         city.swapTiles(5, 4);
 //        city.chop();
     }));
+//    actionQueue.pushAction(startTurn + 28, AnyAction::create([](City &city, Goods &turnGoods){
+//        city.chop();
+//    }));
     city.processBuildingQueue(startTurn, actionQueue);
 }
 

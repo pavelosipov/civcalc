@@ -152,6 +152,6 @@ std::shared_ptr<Building> Building::library(int16_t accumulatedHammers) {
 
 std::shared_ptr<Building> Building::stonehenge(int16_t accumulatedHammers) {
     std::shared_ptr<Building> building = Building::create("STONEHENGE", false,  100, accumulatedHammers);
-    building->setBuildMultiplier(1.35f);
+//    building->setBuildMultiplier(1.35f);
     return building;
 }
